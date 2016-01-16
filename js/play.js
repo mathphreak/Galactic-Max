@@ -173,6 +173,7 @@ TRCGame.playState = function (environment) {
 
       if (this.keys.jump.isDown && this.player.body.touching.down) {
         this.player.body.velocity.y = -250
+        game.sound.play('sfx/jump')
       }
 
       this.background.x = this.camera.x
@@ -261,8 +262,10 @@ TRCGame.playState = function (environment) {
           }, this)
         }
         if (TRCGame.upgrades.rapidfire) {
+          this.game.sound.play('sfx/shoot_rapidfire')
           this.fire.next = Date.now() + 100
         } else {
+          this.game.sound.play('sfx/shoot')
           this.fire.next = Date.now() + 500
         }
       }
@@ -282,6 +285,8 @@ TRCGame.playState = function (environment) {
       TRCGame.score.bonus += 100
 
       this.updateScoreIcons()
+
+      this.game.sound.play('sfx/collect')
     },
 
     updateScoreIcons: function () {
@@ -311,6 +316,7 @@ TRCGame.playState = function (environment) {
 
     lose: function () {
       this.player.kill()
+      this.game.sound.play('sfx/hurt')
       TRCGame.game.state.start('lose')
     },
 

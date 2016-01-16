@@ -8,6 +8,13 @@ TRCGame.loadState = {
 
     game.load.audio('music', 'assets/Hackathon.wav')
 
+    game.load.audio('sfx/shoot', 'assets/Laser_Shoot.wav')
+    game.load.audio('sfx/shoot_rapidfire', 'assets/Laser_Shoot2.wav')
+    game.load.audio('sfx/jump', 'assets/Jump.wav')
+    game.load.audio('sfx/collect', 'assets/Pickup_Coin.wav')
+    game.load.audio('sfx/powerup', 'assets/Powerup.wav')
+    game.load.audio('sfx/hurt', 'assets/Hit_Hurt.wav')
+
     game.load.image('background_space', 'assets/Background-5.png')
     game.load.image('background_venus', 'assets/Planet_Background.png')
     game.load.image('background_mothership', 'assets/Mothership.png')

@@ -115,6 +115,7 @@ TRCGame.winState = function (environment) {
             TRCGame.score.collectibles['screwdriver'] -= 5
             this.updateScoreIcons()
             this.updateUpgrades()
+            this.game.sound.play('sfx/powerup')
           }
         }
       }
