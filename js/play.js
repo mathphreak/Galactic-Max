@@ -6,8 +6,6 @@ TRCGame.playState = {
     game.renderer.renderSession.roundPixels = true
     game.stage.smoothed = false
 
-    game.world.setBounds(0, 0, 9001, game.world.height)
-
     this.score = {
       distance: 0,
       bonus: 0,
@@ -122,8 +120,10 @@ TRCGame.playState = {
     this.score.distance = Math.floor(this.player.x / 100)
     this.scoreText.text = 'Score: ' + this.score.total()
 
-    if (this.camera.x + this.camera.width + 100 > this.latestPlatform().x) {
-      this.generateNextSegment()
+    if (this.player.alive) {
+      if (this.camera.x + this.camera.width + 100 > this.latestPlatform().x) {
+        this.generateNextSegment()
+      }
     }
   },
 
@@ -135,10 +135,12 @@ TRCGame.playState = {
   },
 
   generateNextSegment: function () {
+    var game = this.game
     var startX = this.latestPlatform().x
+    game.world.setBounds(game.camera.x, 0, startX + 500, game.world.height)
     if (Math.random() < 0.25) {
       var crashedSat = this.platforms.create(startX,
-        TRCGame.game.world.height - 64, 'crashedSat')
+        game.world.height - 64, 'crashedSat')
       crashedSat.animations.add('burn', [0, 1, 2], 10, true)
       crashedSat.animations.play('burn')
       crashedSat.scale.setTo(2, 2)
@@ -151,12 +153,12 @@ TRCGame.playState = {
       alien.body.collideWorldBounds = true
     }
     for (var i = startX; i < startX + 500; i += 48) {
-      var ground = this.platforms.create(i, TRCGame.game.world.height - 32, 'platform')
+      var ground = this.platforms.create(i, game.world.height - 32, 'platform')
       ground.scale.setTo(2, 2)
       ground.body.immovable = true
     }
     if (Math.random() < 0.25) {
-      var gasCan = this.gasCans.create(startX + 200, TRCGame.game.world.height - 64, 'gasCan')
+      var gasCan = this.gasCans.create(startX + 200, game.world.height - 64, 'gasCan')
       gasCan.scale.setTo(2, 2)
     }
   },
@@ -196,9 +198,16 @@ TRCGame.playState = {
     collectible.destroy()
     this.collectibles[collectible.key]++
     this.score.bonus += 100
+
+    if (this.gasCanScoreLayer.total < this.collectibles['gasCan']) {
+      var xOffset = this.gasCanScoreLayer.total * 8
+      var can = this.gasCanScoreLayer.create(this.game.canvas.width - xOffset, 0, 'gasCan')
+      can.anchor.setTo(1, 0)
+    }
   },
 
   lose: function () {
+    this.player.kill()
     TRCGame.game.state.start('lose')
   },
 

@@ -8,6 +8,8 @@ TRCGame.loseState = {
       'Just uninstall'
     ]
 
+    game.world.setBounds(0, 0, game.camera.width, game.camera.height)
+
     this.nameLabel = game.add.text(20, 20, 'You lose!',
             {font: '30px League Spartan', fill: '#ffffff'})
     this.failLabel = game.add.text(20, 90,
