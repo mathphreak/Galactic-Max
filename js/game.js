@@ -9,7 +9,8 @@ TRCGame.game = new Phaser.Game(
 TRCGame.game.state.add('boot', TRCGame.bootState)
 TRCGame.game.state.add('load', TRCGame.loadState)
 TRCGame.game.state.add('menu', TRCGame.menuState)
-TRCGame.game.state.add('play', TRCGame.playState)
+TRCGame.game.state.add('play', TRCGame.playState('space'))
+TRCGame.game.state.add('play_venus', TRCGame.playState('venus'))
 TRCGame.game.state.add('win', TRCGame.winState)
 TRCGame.game.state.add('lose', TRCGame.loseState)
 

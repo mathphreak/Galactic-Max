@@ -6,7 +6,8 @@ TRCGame.loadState = {
     this.loadingLabel = game.add.text(20, 20, 'loading...',
           {font: '20px League Spartan', fill: '#ffffff'})
 
-    game.load.image('background', 'assets/Background-5.png')
+    game.load.image('background_space', 'assets/Background-5.png')
+    game.load.image('background_venus', 'assets/Planet_Background.png')
     game.load.image('bullet', 'assets/Projectile.png')
     game.load.image('platform', 'assets/Steel_Plating2.png')
     game.load.image('alien', 'assets/Alien.png')

@@ -14,7 +14,7 @@ TRCGame.winState = {
     this.gasLabel = game.add.text(20, 120,
       'Screwdrivers: ' + TRCGame.score.collectibles['screwdriver'],
       {font: '20px League Spartan', fill: '#ffffff'})
-    this.winLabel = game.add.text(20, 200, 'Press Z to restart',
+    this.winLabel = game.add.text(20, 200, 'Press Z to continue',
       {font: '30px League Spartan', fill: '#ffffff'})
 
     var zKey = game.input.keyboard.addKey(Phaser.Keyboard.Z)
@@ -23,7 +23,7 @@ TRCGame.winState = {
   },
 
   restart: function () {
-    TRCGame.game.state.start('play')
+    TRCGame.game.state.start('play_venus')
   },
 
   render: TRCGame.mirrorCanvases
