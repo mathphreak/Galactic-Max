@@ -92,7 +92,7 @@ var playState = {
     this.score += 10
     this.scoreText.text = 'Score: ' + this.score
 
-    if (this.stars.xyzzy) {
+    if (this.stars.total === 0) {
       game.state.start('win')
     }
   }
