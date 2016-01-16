@@ -31,6 +31,15 @@ TRCGame.generateNextSegment = function (environment) {
       // Mark as immovable
       crashedSat.body.immovable = true
 
+    } else if (game.rnd.frac() < 0.6) {
+        var random = game.rnd.integerInRange(80,150)
+          var normalSat = this.platforms.create(startX ,
+            game.world.height - 100 , 'satellite')
+            normalSat.scale.setTo(2, 2)
+            normalSat.body.immovable = true
+
+
+
       // Otherwise, with a 25% chance, generate an alien
     } else if (game.rnd.frac() < 0.25) {
       // Create the alien at (startX, 200)
@@ -72,7 +81,7 @@ TRCGame.generateNextSegment = function (environment) {
 
     // 1/4 of the time, generate a gas can
     if (game.rnd.frac() < 0.25) {
-      var gasCan = this.gasCans.create(startX + 200, game.world.height - 64, 'gasCan')
+      var gasCan = this.gasCans.create(startX + 200, game.world.height - 90, 'gasCan')
       gasCan.scale.setTo(2, 2)
       // Otherwise, 1/10 of the time, generate a screwdriver
     } else if (game.rnd.frac() < 0.1) {
@@ -81,9 +90,9 @@ TRCGame.generateNextSegment = function (environment) {
     }
 
     // If we've found at least five gas cans...
-    if (TRCGame.score.collectibles['gasCan'] >= 5) {
+    if (TRCGame.score.collectibles['gasCan'] >= 10) {
       // 20% of the time...
-      if (game.rnd.frac() < 0.2) {
+      if (game.rnd.frac() < 0.1) {
         // Create a rocket
         var rocket = this.rockets.create(startX + 350, game.world.height - 32, 'rocket')
 
@@ -110,6 +119,6 @@ TRCGame.generateNextSegment = function (environment) {
     // Make the next startX be 480 away (since we generated 480 pixels of
     // platforms). This is not magic; it can be a different number if that
     // makes sense.
-    this.nextStartX = startX + 480
+    this.nextStartX = startX + 50
   }
 }
