@@ -50,11 +50,11 @@ var playState = {
 
     //  Our animations
     player.animations.add('left_fire', [0], 10, false)
-    player.animations.add('left_move', [1, 2], 10, true)
+    player.animations.add('left_move', [1, 3, 2, 3], 10, true)
     player.animations.add('left_idle', [3], 10, true)
     player.animations.add('idle', [4], 10, true)
     player.animations.add('right_idle', [5], 10, true)
-    player.animations.add('right_move', [6, 7], 10, true)
+    player.animations.add('right_move', [6, 7, 5, 7], 10, true)
     player.animations.add('right_fire', [8], 10, false)
 
     this.keys = game.input.keyboard.createCursorKeys()
