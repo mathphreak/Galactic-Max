@@ -24,7 +24,7 @@ TRCGame.loseState = {
   },
 
   restart: function () {
-    TRCGame.game.state.start('play')
+    TRCGame.game.state.start('play_space')
   },
 
   render: TRCGame.mirrorCanvases

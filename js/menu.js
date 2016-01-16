@@ -14,7 +14,7 @@ TRCGame.menuState = {
   },
 
   start: function () {
-    TRCGame.game.state.start('play')
+    TRCGame.game.state.start('play_space')
   },
 
   render: TRCGame.mirrorCanvases

@@ -13,8 +13,14 @@ TRCGame.playState = function (environment) {
           bonus: 0,
           total: function () {
             return this.distance + this.bonus
+          },
+          collectibles: {
+            gasCan: 0,
+            screwdriver: 0
           }
         }
+      } else {
+        TRCGame.score.collectibles.gasCan -= 5
       }
 
       game.physics.startSystem(Phaser.Physics.ARCADE)
@@ -89,11 +95,6 @@ TRCGame.playState = function (environment) {
 
       var screwdriverScoreLayer = game.add.group(uiLayer)
       this.screwdriverScoreLayer = screwdriverScoreLayer
-
-      TRCGame.score.collectibles = {
-        gasCan: 0,
-        screwdriver: 0
-      }
 
       var gasCans = game.add.group()
       this.gasCans = gasCans
@@ -221,7 +222,7 @@ TRCGame.playState = function (environment) {
 
     win: function () {
       this.player.kill()
-      TRCGame.game.state.start('win')
+      TRCGame.game.state.start('win_' + environment)
     },
 
     lose: function () {
