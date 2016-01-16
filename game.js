@@ -3,6 +3,9 @@
 var platforms
 var player
 var cursors
+var stars
+var score = 0
+var scoreText
 
 var game = new Phaser.Game(800,
   600,
@@ -56,6 +59,18 @@ function create () {
   player.animations.add('right', [5, 6, 7, 8], 10, true)
 
   cursors = game.input.keyboard.createCursorKeys()
+
+  stars = game.add.group()
+
+  stars.enableBody = true
+
+  for (var i = 0; i < 12; i++) {
+    var star = stars.create(i * 70, 0, 'star')
+    star.body.gravity.y = 300
+    star.body.bounce.y = 0.7 + Math.random() * 0.2
+  }
+
+  scoreText = game.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#000'})
 }
 
 function update () {
@@ -77,4 +92,15 @@ function update () {
   if (cursors.up.isDown && player.body.touching.down) {
     player.body.velocity.y = -350
   }
+
+  game.physics.arcade.collide(stars, platforms)
+
+  game.physics.arcade.overlap(player, stars, collectStar, null, this)
+}
+
+function collectStar (player, star) {
+  star.kill()
+
+  score += 10
+  scoreText.text = 'Score: ' + score
 }
