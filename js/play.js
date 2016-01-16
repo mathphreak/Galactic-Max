@@ -108,10 +108,11 @@ TRCGame.playState = {
 
     game.physics.arcade.overlap(this.bullets, this.aliens, this.killAlien, null, this)
     game.physics.arcade.overlap(this.bullets, this.platforms, this.killBullet, null, this)
+    game.physics.arcade.overlap(this.bullets, this.rockets, this.killRocket, null, this)
     game.physics.arcade.overlap(this.player, this.aliens, this.lose, null, this)
     game.physics.arcade.overlap(this.player, this.gasCans, this.collect, null, this)
     game.physics.arcade.overlap(this.player, this.screwdrivers, this.collect, null, this)
-    game.physics.arcade.overlap(this.player, this.rockets, this.win, null, this)
+    game.physics.arcade.overlap(this.player, this.rockets, this.enterRocket, null, this)
 
     this.player.body.velocity.x = 150
     this.player.lastDirection = 1
@@ -160,6 +161,14 @@ TRCGame.playState = {
     TRCGame.score.bonus += 200
   },
 
+  killRocket: function (bullet, rocket) {
+    if (rocket.alive) {
+      bullet.destroy()
+      rocket.alive = false
+      rocket.animations.play('explode')
+    }
+  },
+
   fire: function () {
     if (!this.fire.next || this.fire.next < Date.now()) {
       var bullet = this.bullets.create(this.player.x, this.player.y - 9, 'bullet')
@@ -194,6 +203,12 @@ TRCGame.playState = {
       var xOffset2 = this.screwdriverScoreLayer.total * 8
       var screwdriver = this.screwdriverScoreLayer.create(this.game.canvas.width - xOffset2, 8, 'screwdriver')
       screwdriver.anchor.setTo(1, 0)
+    }
+  },
+
+  enterRocket: function (player, rocket) {
+    if (rocket.alive) {
+      this.win()
     }
   },
 

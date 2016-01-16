@@ -34,6 +34,9 @@ TRCGame.generateNextSegment = function () {
   if (TRCGame.score.collectibles['gasCan'] >= 5) {
     if (game.rnd.frac() < 0.2) {
       var rocket = this.rockets.create(startX + 350, game.world.height - 32, 'rocket')
+      rocket.animations.add('idle', [0], 10, false)
+      rocket.animations.add('explode', [1, 2, 3], 10, false)
+      rocket.animations.play('idle')
       rocket.scale.setTo(2, 2)
       rocket.anchor.setTo(0.5, 1)
     }
