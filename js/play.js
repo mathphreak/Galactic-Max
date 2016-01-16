@@ -24,16 +24,6 @@ var playState = {
       ground.body.immovable = true
     }
 
-    /*
-    var ledge = platforms.create(400, 400, 'ground')
-
-    ledge.body.immovable = true
-
-    ledge = platforms.create(-150, 250, 'ground')
-
-    ledge.body.immovable = true
-    */
-
     // The player and its settings
     var player = game.add.sprite(32, game.world.height - 100, 'max')
     player.scale.setTo(2, 2)
@@ -116,6 +106,29 @@ var playState = {
 
     this.background.x = this.camera.x
     this.background.tilePosition.setTo(this.camera.x * -0.25, this.camera.y)
+
+    if (this.camera.x + this.camera.width + 100 > this.latestPlatform().x) {
+      this.generateNextSegment()
+    }
+  },
+
+  generateNextSegment: function () {
+    var startX = this.latestPlatform().x
+    for (var i = startX; i < startX + 500; i += 48) {
+      var ground = this.platforms.create(i, game.world.height - 32, 'platform')
+      ground.scale.setTo(2, 2)
+      ground.body.immovable = true
+    }
+    if (Math.random() < 0.1) {
+      var wall = this.platforms.create(startX, game.world.height - 64, 'platform')
+      wall.scale.setTo(2, 2)
+      wall.body.immovable = true
+    }
+  },
+
+  latestPlatform: function () {
+    var platforms = this.platforms.children
+    return platforms[platforms.length - 1]
   },
 
   killAlien: function (bullet, alien) {

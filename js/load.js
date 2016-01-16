@@ -5,7 +5,7 @@ var loadState = {
     this.loadingLabel = game.add.text(20, 20, 'loading...',
           {font: '20px League Spartan', fill: '#ffffff'})
 
-    game.load.image('background', 'assets/Background.png')
+    game.load.image('background', 'assets/Background-1.png')
     game.load.image('bullet', 'assets/Projectile.png')
     game.load.image('platform', 'assets/Sat_Platform.png')
     // game.load.image('alien', 'assets/Alien.png')
