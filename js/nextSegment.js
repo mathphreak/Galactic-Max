@@ -41,11 +41,13 @@ GalacticMax.generateNextSegment = function (environment) {
     }
 
     if (game.rnd.frac() < 0.2 &&
-      (!this.lastDangerPlatform() || this.lastDangerPlatform().x < startX - 100) &&
-      (!this.lastHarmlessPlatform() || this.lastHarmlessPlatform().x < startX - 100)) {
+      (!this.lastDangerPlatform() || this.lastDangerPlatform().x < startX - 100)) {
       // Create the alien at (startX, 200)
       // with the image called 'alien'
-      var alienArray = [200, 130]
+      var alienArray = [130]
+      if (!this.lastHarmlessPlatform() || this.lastHarmlessPlatform().x < startX - 100) {
+        alienArray.push(200)
+      }
       var alien = this.aliens.create(startX, game.rnd.pick(alienArray), 'alien')
 
       // Add an animation called 'die' using frames 0, 1, and 2

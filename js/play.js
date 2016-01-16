@@ -188,10 +188,22 @@ GalacticMax.playState = function (environment) {
         }
       }
 
-      if (this.keys.up.isDown) {
-        GalacticMax.score.collectibles.gasCan = 5
-        GalacticMax.score.collectibles.screwdriver = 7
-        this.game.state.start('win_space')
+      if (GalacticMax.DEMO) {
+        if (this.keys.up.isDown && !this.keys.upBlocked) {
+          this.keys.upBlocked = true
+          GalacticMax.score.collectibles.gasCan++
+          this.updateScoreIcons()
+        } else if (!this.keys.up.isDown) {
+          this.keys.upBlocked = false
+        }
+
+        if (this.keys.down.isDown && !this.keys.downBlocked) {
+          this.keys.downBlocked = true
+          GalacticMax.score.collectibles.screwdriver++
+          this.updateScoreIcons()
+        } else if (!this.keys.down.isDown) {
+          this.keys.downBlocked = false
+        }
       }
     },
 
