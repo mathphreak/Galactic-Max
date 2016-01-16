@@ -8,9 +8,12 @@ TRCGame.winState = {
 
     this.nameLabel = game.add.text(20, 20, 'You win!',
       {font: '30px League Spartan', fill: '#ffffff'})
-    this.gasLabel = game.add.text(20, 60,
+    this.gasLabel = game.add.text(20, 80,
       'Gas cans: ' + TRCGame.score.collectibles['gasCan'],
-      {font: '30px League Spartan', fill: '#ffffff'})
+      {font: '20px League Spartan', fill: '#ffffff'})
+    this.gasLabel = game.add.text(20, 120,
+      'Screwdrivers: ' + TRCGame.score.collectibles['screwdriver'],
+      {font: '20px League Spartan', fill: '#ffffff'})
     this.winLabel = game.add.text(20, 200, 'Press Z to restart',
       {font: '30px League Spartan', fill: '#ffffff'})
 

@@ -177,13 +177,13 @@ TRCGame.playState = {
       screwdriver.scale.setTo(2, 2)
     }
 
-    //if (TRCGame.collectibles['gasCan'] >= 5) {
-      if (game.rnd.frac() < 0.8) {
+    if (TRCGame.score.collectibles['gasCan'] >= 5) {
+      if (game.rnd.frac() < 0.2) {
         var rocket = this.rockets.create(startX + 350, game.world.height - 32, 'rocket')
         rocket.scale.setTo(2, 2)
         rocket.anchor.setTo(0.5, 1)
       }
-    //}
+    }
   },
 
   latestPlatform: function () {
