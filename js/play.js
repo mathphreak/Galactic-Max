@@ -19,6 +19,12 @@ TRCGame.playState = function (environment) {
             screwdriver: 0
           }
         }
+
+        TRCGame.upgrades = {
+          rapidfire: false,
+          shield: false,
+          speed_control: false
+        }
       } else {
         TRCGame.score.collectibles.gasCan -= 5
       }
@@ -145,6 +151,10 @@ TRCGame.playState = function (environment) {
         if (this.camera.x + this.camera.width + 100 > this.nextStartX) {
           this.generateNextSegment()
         }
+      }
+
+      if (this.keys.up.isDown) {
+        this.game.state.start('win_space')
       }
     },
 
