@@ -154,7 +154,7 @@ TRCGame.playState = function (environment) {
       }
 
       if (this.keys.up.isDown) {
-        this.game.state.start('win_space')
+        this.game.state.start('win_mothership')
       }
     },
 

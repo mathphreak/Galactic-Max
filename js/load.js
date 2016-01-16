@@ -22,10 +22,13 @@ TRCGame.loadState = {
     game.load.image('upgrades/speedctl', 'assets/SpeedControl_PwrUp.png')
     game.load.image('selector', 'assets/Arrow.png')
 
+    game.load.image('victory', 'assets/Victory_Screen.png')
+
     game.load.spritesheet('crashedSat', 'assets/Animated_CrashSat.png', 16, 16)
     game.load.spritesheet('max', 'assets/All.png', 16, 16)
     game.load.spritesheet('rocket', 'assets/Exploding_Rocket_Anim.png', 24, 32)
     game.load.spritesheet('alien', 'assets/Alien_Death-1.png', 8, 16)
+    game.load.spritesheet('player_victory', 'assets/Sicem.png', 16, 32)
   },
 
   create: function () {

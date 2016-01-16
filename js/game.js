@@ -16,5 +16,6 @@ TRCGame.game.state.add('win_space', TRCGame.winState('space'))
 TRCGame.game.state.add('win_venus', TRCGame.winState('venus'))
 TRCGame.game.state.add('win_mothership', TRCGame.winState('mothership'))
 TRCGame.game.state.add('lose', TRCGame.loseState)
+TRCGame.game.state.add('victory', TRCGame.victoryState)
 
 TRCGame.game.state.start('boot')
