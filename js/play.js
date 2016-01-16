@@ -32,11 +32,12 @@ TRCGame.playState = function (environment) {
       this.platforms = platforms
 
       platforms.enableBody = true
-      for (var i = 0; i < game.width; i += 48) {
+      for (var i = 0; i < 240; i += 48) {
         var ground = platforms.create(i, game.world.height - 32, 'platform_' + environment)
         ground.scale.setTo(2, 2)
         ground.body.immovable = true
       }
+      this.nextStartX = 240
 
       // The player and its settings
       var player = game.add.sprite(0, game.world.height - 48, 'max')
@@ -141,7 +142,7 @@ TRCGame.playState = function (environment) {
       this.scoreText.text = 'Score: ' + TRCGame.score.total()
 
       if (this.player.alive) {
-        if (this.camera.x + this.camera.width + 100 > this.latestPlatform().x) {
+        if (this.camera.x + this.camera.width + 100 > this.nextStartX) {
           this.generateNextSegment()
         }
       }
@@ -155,11 +156,6 @@ TRCGame.playState = function (environment) {
     },
 
     generateNextSegment: TRCGame.generateNextSegment(environment),
-
-    latestPlatform: function () {
-      var platforms = this.platforms.children
-      return platforms[platforms.length - 1]
-    },
 
     killAlien: function (bullet, alien) {
       if (alien.alive) {
