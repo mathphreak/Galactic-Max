@@ -103,6 +103,8 @@ TRCGame.playState = function (environment) {
       var screwdrivers = game.add.group()
       this.screwdrivers = screwdrivers
       screwdrivers.enableBody = true
+
+      this.updateScoreIcons()
     },
 
     update: function () {
@@ -201,13 +203,17 @@ TRCGame.playState = function (environment) {
       TRCGame.score.collectibles[collectible.key]++
       TRCGame.score.bonus += 100
 
-      if (this.gasCanScoreLayer.total < TRCGame.score.collectibles['gasCan']) {
+      this.updateScoreIcons()
+    },
+
+    updateScoreIcons: function () {
+      while (this.gasCanScoreLayer.total < TRCGame.score.collectibles['gasCan']) {
         var xOffset = this.gasCanScoreLayer.total * 8
         var can = this.gasCanScoreLayer.create(this.game.canvas.width - xOffset, 0, 'gasCan')
         can.anchor.setTo(1, 0)
       }
 
-      if (this.screwdriverScoreLayer.total < TRCGame.score.collectibles['screwdriver']) {
+      while (this.screwdriverScoreLayer.total < TRCGame.score.collectibles['screwdriver']) {
         var xOffset2 = this.screwdriverScoreLayer.total * 8
         var screwdriver = this.screwdriverScoreLayer.create(this.game.canvas.width - xOffset2, 8, 'screwdriver')
         screwdriver.anchor.setTo(1, 0)

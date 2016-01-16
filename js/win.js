@@ -29,7 +29,7 @@ TRCGame.winState = function (environment) {
       } else if (environment === 'venus') {
         TRCGame.game.state.start('play_mothership')
       } else {
-        TRCGame.game.state.start('final_victory')
+        TRCGame.game.state.start('victory')
       }
     },
 
