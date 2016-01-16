@@ -51,15 +51,17 @@ var playState = {
     this.keys.jump = game.input.keyboard.addKey(Phaser.Keyboard.Z)
     this.keys.fire = game.input.keyboard.addKey(Phaser.Keyboard.X)
 
-    var stars = game.add.group()
-    this.stars = stars
+    var aliens = game.add.group()
+    this.aliens = aliens
 
-    stars.enableBody = true
+    aliens.enableBody = true
 
-    for (var i = 0; i < 3; i++) {
-      var star = stars.create(i * 70, 0, 'star')
-      star.body.gravity.y = 300
-      star.body.bounce.y = 0.7 + Math.random() * 0.2
+    for (var j = 2; j < 5; j++) {
+      var alien = aliens.create(j * 70, 0, 'alien')
+      alien.scale.setTo(2, 2)
+      alien.body.bounce.y = 0
+      alien.body.gravity.y = 300
+      alien.body.collideWorldBounds = true
     }
 
     var bullets = game.add.group()
@@ -94,29 +96,31 @@ var playState = {
     }
 
     if (this.keys.jump.isDown && this.player.body.touching.down) {
-      this.player.body.velocity.y = -350
+      this.player.body.velocity.y = -300
     }
 
-    game.physics.arcade.collide(this.stars, this.platforms)
+    game.physics.arcade.collide(this.aliens, this.platforms)
 
-    game.physics.arcade.overlap(this.player, this.stars, this.collectStar, null, this)
+    game.physics.arcade.overlap(this.bullets, this.aliens, this.collectStar, null, this)
     game.physics.arcade.overlap(this.bullets, this.platforms, this.killBullet, null, this)
+    game.physics.arcade.overlap(this.player, this.aliens, this.lose, null, this)
   },
 
-  collectStar: function (player, star) {
-    star.kill()
+  collectStar: function (bullet, alien) {
+    bullet.kill()
+    alien.kill()
 
     this.score += 10
     this.scoreText.text = 'Score: ' + this.score
 
-    if (this.stars.total === 0) {
+    if (this.aliens.total === 0) {
       game.state.start('win')
     }
   },
 
   fire: function () {
     if (!this.fire.next || this.fire.next < Date.now()) {
-      var bullet = this.bullets.create(this.player.x, this.player.y, 'bullet')
+      var bullet = this.bullets.create(this.player.x, this.player.y + 10, 'bullet')
       bullet.body.gravity.y = 0
       var sign = this.player.lastDirection
       bullet.body.velocity.x = 500 * sign
@@ -130,6 +134,10 @@ var playState = {
 
   killBullet: function (bullet) {
     bullet.kill()
+  },
+
+  lose: function () {
+    game.state.start('lose')
   },
 
   render: mirrorCanvases
