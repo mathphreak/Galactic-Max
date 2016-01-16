@@ -33,7 +33,7 @@ TRCGame.playState = function (environment) {
 
       platforms.enableBody = true
       for (var i = 0; i < game.width; i += 48) {
-        var ground = platforms.create(i, game.world.height - 32, 'platform')
+        var ground = platforms.create(i, game.world.height - 32, 'platform_' + environment)
         ground.scale.setTo(2, 2)
         ground.body.immovable = true
       }
@@ -152,7 +152,7 @@ TRCGame.playState = function (environment) {
       }
     },
 
-    generateNextSegment: TRCGame.generateNextSegment,
+    generateNextSegment: TRCGame.generateNextSegment(environment),
 
     latestPlatform: function () {
       var platforms = this.platforms.children
