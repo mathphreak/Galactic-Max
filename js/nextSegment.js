@@ -12,7 +12,8 @@ TRCGame.generateNextSegment = function (environment) {
     game.world.setBounds(game.camera.x, 0, startX + 500, game.world.height)
 
     // With a 25% chance, generate a crashed satellite
-    if (game.rnd.frac() < 0.05) {
+    if (game.rnd.frac() < 0.05 &&
+      (!this.lastHarmlessPlatform() || this.lastHarmlessPlatform().x < startX - 100)) {
       // Create the satellite at (startX, game.world.height - 64)
       // with the image called 'crashedSat'
       var crashedSat = this.dangerPlatforms.create(startX,
@@ -40,7 +41,8 @@ TRCGame.generateNextSegment = function (environment) {
     }
 
     if (game.rnd.frac() < 0.2 &&
-      (!this.lastDangerPlatform() || this.lastDangerPlatform().x < startX - 10)) {
+      (!this.lastDangerPlatform() || this.lastDangerPlatform().x < startX - 100) &&
+      (!this.lastHarmlessPlatform() || this.lastHarmlessPlatform().x < startX - 100)) {
       // Create the alien at (startX, 200)
       // with the image called 'alien'
       var alienArray = [200, 130]

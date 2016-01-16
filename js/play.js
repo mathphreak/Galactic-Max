@@ -213,6 +213,11 @@ TRCGame.playState = function (environment) {
       return platforms[platforms.length - 1]
     },
 
+    lastHarmlessPlatform: function () {
+      var platforms = this.harmlessPlatforms.children
+      return platforms[platforms.length - 1]
+    },
+
     generateNextSegment: TRCGame.generateNextSegment(environment),
 
     killAlien: function (bullet, alien) {
