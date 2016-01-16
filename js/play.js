@@ -57,17 +57,7 @@ var playState = {
     var aliens = game.add.group()
     this.aliens = aliens
 
-    /*
     aliens.enableBody = true
-
-    for (var j = 2; j < 5; j++) {
-      var alien = aliens.create(j * 70, 200, 'alien')
-      alien.scale.setTo(2, 2)
-      alien.body.bounce.y = 0
-      alien.body.gravity.y = 300
-      alien.body.collideWorldBounds = true
-    }
-    */
 
     var bullets = game.add.group()
     this.bullets = bullets
@@ -119,10 +109,16 @@ var playState = {
       ground.scale.setTo(2, 2)
       ground.body.immovable = true
     }
-    if (Math.random() < 0.1) {
+    if (Math.random() < 0.25) {
       var wall = this.platforms.create(startX, game.world.height - 64, 'platform')
       wall.scale.setTo(2, 2)
       wall.body.immovable = true
+    } else if (Math.random() < 0.25) {
+      var alien = this.aliens.create(startX, 200, 'alien')
+      alien.scale.setTo(2, 2)
+      alien.body.bounce.y = 0
+      alien.body.gravity.y = 300
+      alien.body.collideWorldBounds = true
     }
   },
 

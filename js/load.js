@@ -8,7 +8,7 @@ var loadState = {
     game.load.image('background', 'assets/Background-1.png')
     game.load.image('bullet', 'assets/Projectile.png')
     game.load.image('platform', 'assets/Sat_Platform.png')
-    // game.load.image('alien', 'assets/Alien.png')
+    game.load.image('alien', 'assets/Alien.png')
     game.load.spritesheet('max', 'assets/All.png', 16, 16)
   },
 
