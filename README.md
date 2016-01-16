@@ -2,3 +2,6 @@
 
 # TODO
 - more useful fire animation
+- upgrades:
+  - shield
+  - rapid fire
