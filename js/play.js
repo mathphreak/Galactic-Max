@@ -34,6 +34,7 @@ var playState = {
     // The player and its settings
     var player = game.add.sprite(32, game.world.height - 100, 'max')
     player.scale.setTo(2, 2)
+    player.anchor.setTo(1, 0.5)
     this.player = player
 
     //  We need to enable physics on the player
@@ -48,13 +49,13 @@ var playState = {
     this.game.camera.follow(player)
 
     //  Our animations
-    player.animations.add('left_fire', [1], 10, false)
-    player.animations.add('left_move', [2, 3], 10, true)
-    player.animations.add('left_idle', [4], 10, true)
-    player.animations.add('idle', [5], 10, true)
-    player.animations.add('right_idle', [6], 10, true)
-    player.animations.add('right_move', [7, 8], 10, true)
-    player.animations.add('right_fire', [9], 10, false)
+    player.animations.add('left_fire', [0], 10, false)
+    player.animations.add('left_move', [1, 2], 10, true)
+    player.animations.add('left_idle', [3], 10, true)
+    player.animations.add('idle', [4], 10, true)
+    player.animations.add('right_idle', [5], 10, true)
+    player.animations.add('right_move', [6, 7], 10, true)
+    player.animations.add('right_fire', [8], 10, false)
 
     this.keys = game.input.keyboard.createCursorKeys()
     this.keys.jump = game.input.keyboard.addKey(Phaser.Keyboard.Z)
@@ -121,7 +122,7 @@ var playState = {
 
   fire: function () {
     if (!this.fire.next || this.fire.next < Date.now()) {
-      var bullet = this.bullets.create(this.player.x, this.player.y + 10, 'bullet')
+      var bullet = this.bullets.create(this.player.x, this.player.y - 9, 'bullet')
       bullet.body.gravity.y = 0
       var sign = this.player.lastDirection
       bullet.body.velocity.x = 500 * sign

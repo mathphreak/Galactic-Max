@@ -10,7 +10,7 @@ var loadState = {
     game.load.image('platform', 'assets/Sat_Platform.png')
     // game.load.image('alien', 'assets/Alien.png')
     game.load.spritesheet('dude', 'assets/tutorial_dude.png', 32, 48)
-    game.load.spritesheet('max', 'assets/All.png', 8, 16)
+    game.load.spritesheet('max', 'assets/All.png', 16, 16)
   },
 
   create: function () {
