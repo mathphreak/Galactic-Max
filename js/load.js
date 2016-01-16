@@ -18,7 +18,7 @@ TRCGame.loadState = {
     game.load.image('satellite', 'assets/Sat_Platform.png')
 
     game.load.image('upgrades/rapidfire', 'assets/Rapid_PwrUp.png')
-    game.load.image('upgrades/shield', 'assets/Shield_Pwrup.png')
+    game.load.image('upgrades/trishot', 'assets/Trishot_PwrUp.png')
     game.load.image('upgrades/speedctl', 'assets/SpeedControl_PwrUp.png')
     game.load.image('selector', 'assets/Arrow.png')
 

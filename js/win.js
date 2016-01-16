@@ -41,13 +41,13 @@ TRCGame.winState = function (environment) {
       var rfLabel = this.options.rapidfire.create(rfIcon.width + 5, 0, 'Rapid Fire',
         {font: '15px League Spartan', fill: '#fff'})
 
-      this.options.shield = game.add.group(this.options.group, 'shield')
-      this.options.shield.x = 0
-      this.options.shield.y = rfLabel.height
-      var sIcon = this.options.shield.create(0, 4, 'upgrades/shield')
+      this.options.trishot = game.add.group(this.options.group, 'trishot')
+      this.options.trishot.x = 0
+      this.options.trishot.y = rfLabel.height
+      var sIcon = this.options.trishot.create(0, 4, 'upgrades/trishot')
       sIcon.scale.setTo(2, 2)
-      this.options.shield.classType = Phaser.Text
-      this.options.shield.create(sIcon.width + 5, 0, 'Shield',
+      this.options.trishot.classType = Phaser.Text
+      this.options.trishot.create(sIcon.width + 5, 0, 'Trishot',
         {font: '15px League Spartan', fill: '#fff'})
 
       this.options.speed_control = game.add.group(this.options.group, 'speed_control')
@@ -68,7 +68,7 @@ TRCGame.winState = function (environment) {
 
       this.options.array = [
         this.options.rapidfire,
-        this.options.shield,
+        this.options.trishot,
         this.options.speed_control,
         {isContinue: true}
       ]

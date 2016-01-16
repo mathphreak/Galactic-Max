@@ -22,7 +22,7 @@ TRCGame.playState = function (environment) {
 
         TRCGame.upgrades = {
           rapidfire: false,
-          shield: false,
+          trishot: false,
           speed_control: false
         }
       } else {
@@ -213,6 +213,24 @@ TRCGame.playState = function (environment) {
         bullet.events.onOutOfBounds.add(function () {
           bullet.destroy()
         }, this)
+        if (TRCGame.upgrades.trishot) {
+          var high_bullet = this.bullets.create(this.player.x, this.player.y - 9, 'bullet')
+          high_bullet.body.gravity.y = 0
+          high_bullet.body.velocity.x = 500 * sign
+          high_bullet.body.velocity.y = -100
+          high_bullet.scale.setTo(2 * sign, 2)
+          high_bullet.events.onOutOfBounds.add(function () {
+            high_bullet.destroy()
+          }, this)
+          var low_bullet = this.bullets.create(this.player.x, this.player.y - 9, 'bullet')
+          low_bullet.body.gravity.y = 0
+          low_bullet.body.velocity.x = 500 * sign
+          low_bullet.body.velocity.y = 100
+          low_bullet.scale.setTo(2 * sign, 2)
+          low_bullet.events.onOutOfBounds.add(function () {
+            low_bullet.destroy()
+          }, this)
+        }
         if (TRCGame.upgrades.rapidfire) {
           this.fire.next = Date.now() + 100
         } else {
@@ -222,8 +240,11 @@ TRCGame.playState = function (environment) {
     },
 
     killBullet: function (bullet) {
-      bullet.parent.remove(bullet, false)
-      bullet.pendingDestroy = true
+      if (bullet.alive) {
+        bullet.parent.remove(bullet, false)
+        bullet.pendingDestroy = true
+        bullet.alive = false
+      }
     },
 
     collect: function (player, collectible) {
