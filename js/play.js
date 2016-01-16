@@ -6,7 +6,7 @@ TRCGame.playState = {
     game.renderer.renderSession.roundPixels = true
     game.stage.smoothed = false
 
-    this.score = {
+    TRCGame.score = {
       distance: 0,
       bonus: 0,
       total: function () {
@@ -80,14 +80,21 @@ TRCGame.playState = {
     var gasCanScoreLayer = game.add.group(uiLayer)
     this.gasCanScoreLayer = gasCanScoreLayer
 
-    this.collectibles = {
-      gasCan: 0
+    var screwdriverScoreLayer = game.add.group(uiLayer)
+    this.screwdriverScoreLayer = screwdriverScoreLayer
+
+    TRCGame.score.collectibles = {
+      gasCan: 0,
+      screwdriver: 0
     }
 
     var gasCans = game.add.group()
     this.gasCans = gasCans
-
     gasCans.enableBody = true
+
+    var screwdrivers = game.add.group()
+    this.screwdrivers = screwdrivers
+    screwdrivers.enableBody = true
   },
 
   update: function () {
@@ -100,6 +107,7 @@ TRCGame.playState = {
     game.physics.arcade.overlap(this.bullets, this.platforms, this.killBullet, null, this)
     game.physics.arcade.overlap(this.player, this.aliens, this.lose, null, this)
     game.physics.arcade.overlap(this.player, this.gasCans, this.collect, null, this)
+    game.physics.arcade.overlap(this.player, this.screwdrivers, this.collect, null, this)
 
     this.player.body.velocity.x = 150
     this.player.lastDirection = 1
@@ -117,8 +125,8 @@ TRCGame.playState = {
     this.background.x = this.camera.x
     this.background.tilePosition.setTo(this.camera.x * -0.25, this.camera.y)
 
-    this.score.distance = Math.floor(this.player.x / 100)
-    this.scoreText.text = 'Score: ' + this.score.total()
+    TRCGame.score.distance = Math.floor(this.player.x / 100)
+    this.scoreText.text = 'Score: ' + TRCGame.score.total()
 
     if (this.player.alive) {
       if (this.camera.x + this.camera.width + 100 > this.latestPlatform().x) {
@@ -160,6 +168,9 @@ TRCGame.playState = {
     if (Math.random() < 0.25) {
       var gasCan = this.gasCans.create(startX + 200, game.world.height - 64, 'gasCan')
       gasCan.scale.setTo(2, 2)
+    } else if (Math.random() < 0.1) {
+      var screwdriver = this.screwdrivers.create(startX + 200, game.world.height - 64, 'screwdriver')
+      screwdriver.scale.setTo(2, 2)
     }
   },
 
@@ -172,7 +183,7 @@ TRCGame.playState = {
     bullet.destroy()
     alien.destroy()
 
-    this.score.bonus += 200
+    TRCGame.score.bonus += 200
   },
 
   fire: function () {
@@ -196,13 +207,19 @@ TRCGame.playState = {
 
   collect: function (player, collectible) {
     collectible.destroy()
-    this.collectibles[collectible.key]++
-    this.score.bonus += 100
+    TRCGame.score.collectibles[collectible.key]++
+    TRCGame.score.bonus += 100
 
-    if (this.gasCanScoreLayer.total < this.collectibles['gasCan']) {
+    if (this.gasCanScoreLayer.total < TRCGame.score.collectibles['gasCan']) {
       var xOffset = this.gasCanScoreLayer.total * 8
       var can = this.gasCanScoreLayer.create(this.game.canvas.width - xOffset, 0, 'gasCan')
       can.anchor.setTo(1, 0)
+    }
+
+    if (this.screwdriverScoreLayer.total < TRCGame.score.collectibles['screwdriver']) {
+      var xOffset2 = this.screwdriverScoreLayer.total * 8
+      var screwdriver = this.screwdriverScoreLayer.create(this.game.canvas.width - xOffset2, 8, 'screwdriver')
+      screwdriver.anchor.setTo(1, 0)
     }
   },
 
