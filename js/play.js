@@ -51,6 +51,10 @@ TRCGame.playState = function (environment) {
       this.harmlessPlatforms = harmlessPlatforms
       harmlessPlatforms.enableBody = true
 
+      var dangerPlatforms = game.add.group()
+      this.dangerPlatforms = dangerPlatforms
+      dangerPlatforms.enableBody = true
+
       // The player and its settings
       var player = game.add.sprite(0, game.world.height - 48, 'max')
       player.scale.setTo(2, 2)
@@ -129,13 +133,17 @@ TRCGame.playState = function (environment) {
 
       game.physics.arcade.collide(this.player, this.harmlessPlatforms)
       game.physics.arcade.collide(this.player, this.platforms, this.checkWall, null, this)
+      game.physics.arcade.collide(this.player, this.dangerPlatforms, this.lose, null, this)
       game.physics.arcade.collide(this.aliens, this.harmlessPlatforms)
       game.physics.arcade.collide(this.aliens, this.platforms)
+      game.physics.arcade.collide(this.aliens, this.dangerPlatforms)
       game.physics.arcade.collide(this.spaceships, this.harmlessPlatforms)
       game.physics.arcade.collide(this.spaceships, this.platforms)
+      game.physics.arcade.collide(this.spaceships, this.dangerPlatforms)
 
       game.physics.arcade.overlap(this.bullets, this.aliens, this.killAlien, null, this)
       game.physics.arcade.overlap(this.bullets, this.spaceships, this.killAlien, null, this)
+      game.physics.arcade.overlap(this.bullets, this.dangerPlatforms, this.killBullet, null, this)
       game.physics.arcade.overlap(this.bullets, this.platforms, this.killBullet, null, this)
       game.physics.arcade.overlap(this.bullets, this.harmlessPlatforms, this.killBullet, null, this)
       game.physics.arcade.overlap(this.bullets, this.rockets, this.killRocket, null, this)
@@ -197,6 +205,11 @@ TRCGame.playState = function (environment) {
       if (alien.alive) {
         this.lose()
       }
+    },
+
+    lastDangerPlatform: function () {
+      var platforms = this.dangerPlatforms.children
+      return platforms[platforms.length - 1]
     },
 
     generateNextSegment: TRCGame.generateNextSegment(environment),
