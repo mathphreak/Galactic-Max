@@ -13,10 +13,11 @@ TRCGame.generateNextSegment = function () {
     crashedSat.body.immovable = true
   } else if (game.rnd.frac() < 0.25) {
     var alien = this.aliens.create(startX, 200, 'alien')
+    var alienDeath = alien.animations.add('die', [0, 1, 2], 30, false)
+    alienDeath.killOnComplete = true
     alien.scale.setTo(2, 2)
     alien.body.bounce.y = 0
     alien.body.gravity.y = 300
-    alien.body.collideWorldBounds = true
   }
   for (var i = startX; i < startX + 500; i += 48) {
     var ground = this.platforms.create(i, game.world.height - 32, 'platform')

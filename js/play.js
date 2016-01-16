@@ -159,10 +159,13 @@ TRCGame.playState = function (environment) {
     },
 
     killAlien: function (bullet, alien) {
-      bullet.destroy()
-      alien.destroy()
+      if (alien.alive) {
+        bullet.destroy()
+        alien.alive = false
+        alien.animations.play('die')
 
-      TRCGame.score.bonus += 200
+        TRCGame.score.bonus += 200
+      }
     },
 
     killRocket: function (bullet, rocket) {
