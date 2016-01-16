@@ -58,7 +58,8 @@ var playState = {
       star.body.bounce.y = 0.7 + Math.random() * 0.2
     }
 
-    this.scoreText = game.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#000'})
+    this.scoreText = game.add.text(16, 16, 'score: 0',
+              {font: '32px League Spartan', fill: '#000'})
   },
 
   update: function () {

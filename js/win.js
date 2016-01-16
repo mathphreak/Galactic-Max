@@ -3,9 +3,9 @@
 var winState = {
   create: function () {
     this.nameLabel = game.add.text(80, 80, 'You win!',
-            {font: '50px Junction', fill: '#ffffff'})
+            {font: '50px League Spartan', fill: '#ffffff'})
     this.winLabel = game.add.text(80, 360, 'Press Z to restart',
-            {font: '50px Junction', fill: '#ffffff'})
+            {font: '50px League Spartan', fill: '#ffffff'})
 
     var zKey = game.input.keyboard.addKey(Phaser.Keyboard.Z)
 

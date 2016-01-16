@@ -3,7 +3,7 @@
 var loadState = {
   preload: function () {
     this.loadingLabel = game.add.text(80, 150, 'loading...',
-          {font: '30px Anonymous Pro', fill: '#ffffff'})
+          {font: '30px League Spartan', fill: '#ffffff'})
 
     game.load.image('sky', 'assets/tutorial_sky.png')
     game.load.image('ground', 'assets/tutorial_platform.png')
