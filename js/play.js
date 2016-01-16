@@ -7,6 +7,8 @@ TRCGame.playState = function (environment) {
       game.renderer.renderSession.roundPixels = true
       game.stage.smoothed = false
 
+      game.sound.play('music', 1, true)
+
       if (environment === 'space') {
         TRCGame.score = {
           distance: 0,

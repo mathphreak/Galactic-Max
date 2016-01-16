@@ -5,6 +5,8 @@ TRCGame.winState = function (environment) {
     create: function () {
       var game = TRCGame.game
 
+      game.sound.stopAll()
+
       game.world.setBounds(0, 0, game.camera.width, game.camera.height)
 
       var gasCanScoreLayer = game.add.group()

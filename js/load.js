@@ -4,7 +4,9 @@ TRCGame.loadState = {
   preload: function () {
     var game = TRCGame.game
     this.loadingLabel = game.add.text(20, 20, 'loading...',
-          {font: '20px League Spartan', fill: '#ffffff'})
+      {font: '20px League Spartan', fill: '#ffffff'})
+
+    game.load.audio('music', 'assets/Hackathon.wav')
 
     game.load.image('background_space', 'assets/Background-5.png')
     game.load.image('background_venus', 'assets/Planet_Background.png')
