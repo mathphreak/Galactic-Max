@@ -161,7 +161,9 @@ TRCGame.playState = function (environment) {
       }
 
       if (this.keys.up.isDown) {
-        this.game.state.start('win_mothership')
+        TRCGame.score.collectibles.gasCan = 5
+        TRCGame.score.collectibles.screwdriver = 7
+        this.game.state.start('win_space')
       }
     },
 

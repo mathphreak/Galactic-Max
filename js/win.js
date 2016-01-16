@@ -7,28 +7,13 @@ TRCGame.winState = function (environment) {
 
       game.world.setBounds(0, 0, game.camera.width, game.camera.height)
 
-      TRCGame.score.collectibles.gasCan = 5
-      TRCGame.score.collectibles.screwdriver = 3
-
       var gasCanScoreLayer = game.add.group()
       this.gasCanScoreLayer = gasCanScoreLayer
 
       var screwdriverScoreLayer = game.add.group()
       this.screwdriverScoreLayer = screwdriverScoreLayer
 
-      while (this.gasCanScoreLayer.total < TRCGame.score.collectibles['gasCan']) {
-        var xOffset = this.gasCanScoreLayer.total * 16
-        var can = this.gasCanScoreLayer.create(xOffset, 0, 'gasCan')
-        can.anchor.setTo(0, 0)
-        can.scale.setTo(2, 2)
-      }
-
-      while (this.screwdriverScoreLayer.total < TRCGame.score.collectibles['screwdriver']) {
-        var xOffset2 = this.screwdriverScoreLayer.total * 16
-        var screwdriver = this.screwdriverScoreLayer.create(-xOffset2, 0, 'screwdriver')
-        screwdriver.anchor.setTo(1, 0)
-        screwdriver.scale.setTo(2, 2)
-      }
+      this.updateScoreIcons()
 
       this.titleLabel = game.add.text(20, 15, 'Level Complete',
         {font: '30px League Spartan', fill: '#ffffff'})
@@ -47,7 +32,7 @@ TRCGame.winState = function (environment) {
       this.options.group.x = 20
       this.options.group.y = this.titleLabel.bottom + 24
 
-      this.options.rapidfire = game.add.group(this.options.group)
+      this.options.rapidfire = game.add.group(this.options.group, 'rapidfire')
       this.options.rapidfire.x = 0
       this.options.rapidfire.y = 0
       var rfIcon = this.options.rapidfire.create(0, 4, 'upgrades/rapidfire')
@@ -56,7 +41,7 @@ TRCGame.winState = function (environment) {
       var rfLabel = this.options.rapidfire.create(rfIcon.width + 5, 0, 'Rapid Fire',
         {font: '15px League Spartan', fill: '#fff'})
 
-      this.options.shield = game.add.group(this.options.group)
+      this.options.shield = game.add.group(this.options.group, 'shield')
       this.options.shield.x = 0
       this.options.shield.y = rfLabel.height
       var sIcon = this.options.shield.create(0, 4, 'upgrades/shield')
@@ -65,7 +50,7 @@ TRCGame.winState = function (environment) {
       this.options.shield.create(sIcon.width + 5, 0, 'Shield',
         {font: '15px League Spartan', fill: '#fff'})
 
-      this.options.speed_control = game.add.group(this.options.group)
+      this.options.speed_control = game.add.group(this.options.group, 'speed_control')
       this.options.speed_control.x = 0
       this.options.speed_control.y = 2 * rfLabel.height
       var scIcon = this.options.speed_control.create(0, 4, 'upgrades/speedctl')
@@ -88,9 +73,7 @@ TRCGame.winState = function (environment) {
         {isContinue: true}
       ]
 
-      for (var upgrade in TRCGame.upgrades) {
-        this.options[upgrade].alpha = (TRCGame.upgrades[upgrade] ? 0.5 : 1)
-      }
+      this.updateUpgrades()
 
       this.options.selection = {}
 
@@ -125,7 +108,12 @@ TRCGame.winState = function (environment) {
         if (selected.isContinue) {
           this.continue()
         } else {
-          selected.alpha = 0.5
+          if (selected.alpha !== 0.5) {
+            TRCGame.upgrades[selected.name] = true
+            TRCGame.score.collectibles['screwdriver'] -= 5
+            this.updateScoreIcons()
+            this.updateUpgrades()
+          }
         }
       }
 
@@ -140,6 +128,35 @@ TRCGame.winState = function (environment) {
         TRCGame.game.state.start('play_mothership')
       } else {
         TRCGame.game.state.start('victory')
+      }
+    },
+
+    updateScoreIcons: function () {
+      this.gasCanScoreLayer.removeAll()
+      this.screwdriverScoreLayer.removeAll()
+
+      while (this.gasCanScoreLayer.total < TRCGame.score.collectibles['gasCan']) {
+        var xOffset = this.gasCanScoreLayer.total * 16
+        var can = this.gasCanScoreLayer.create(xOffset, 0, 'gasCan')
+        can.anchor.setTo(0, 0)
+        can.scale.setTo(2, 2)
+      }
+
+      while (this.screwdriverScoreLayer.total < TRCGame.score.collectibles['screwdriver']) {
+        var xOffset2 = this.screwdriverScoreLayer.total * 16
+        var screwdriver = this.screwdriverScoreLayer.create(-xOffset2, 0, 'screwdriver')
+        screwdriver.anchor.setTo(1, 0)
+        screwdriver.scale.setTo(2, 2)
+      }
+    },
+
+    updateUpgrades: function () {
+      for (var upgrade in TRCGame.upgrades) {
+        if (TRCGame.score.collectibles['screwdriver'] < 5) {
+          this.options[upgrade].alpha = 0.5
+        } else {
+          this.options[upgrade].alpha = (TRCGame.upgrades[upgrade] ? 0.5 : 1)
+        }
       }
     },
 
