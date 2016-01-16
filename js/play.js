@@ -1,16 +1,16 @@
-/*global TRCGame, Phaser*/
+/*global GalacticMax, Phaser*/
 
-TRCGame.playState = function (environment) {
+GalacticMax.playState = function (environment) {
   return {
     create: function () {
-      var game = TRCGame.game
+      var game = GalacticMax.game
       game.renderer.renderSession.roundPixels = true
       game.stage.smoothed = false
 
       game.sound.play('music', 1, true)
 
       if (environment === 'space') {
-        TRCGame.score = {
+        GalacticMax.score = {
           distance: 0,
           bonus: 0,
           total: function () {
@@ -22,13 +22,13 @@ TRCGame.playState = function (environment) {
           }
         }
 
-        TRCGame.upgrades = {
+        GalacticMax.upgrades = {
           rapidfire: false,
           trishot: false,
           speed_control: false
         }
       } else {
-        TRCGame.score.collectibles.gasCan -= 5
+        GalacticMax.score.collectibles.gasCan -= 5
       }
 
       game.physics.startSystem(Phaser.Physics.ARCADE)
@@ -129,7 +129,7 @@ TRCGame.playState = function (environment) {
     },
 
     update: function () {
-      var game = TRCGame.game
+      var game = GalacticMax.game
 
       game.physics.arcade.collide(this.player, this.harmlessPlatforms)
       game.physics.arcade.collide(this.player, this.platforms, this.checkWall, null, this)
@@ -157,7 +157,7 @@ TRCGame.playState = function (environment) {
       this.player.lastDirection = 1
       this.player.animations.play('right_move')
 
-      if (TRCGame.upgrades.speed_control) {
+      if (GalacticMax.upgrades.speed_control) {
         if (this.keys.right.isDown) {
           this.player.body.velocity.x += 50
         }
@@ -179,8 +179,8 @@ TRCGame.playState = function (environment) {
       this.background.x = this.camera.x
       this.background.tilePosition.setTo(this.camera.x * -0.25, this.camera.y)
 
-      TRCGame.score.distance = Math.floor(this.player.x / 100)
-      this.scoreText.text = 'Score: ' + TRCGame.score.total()
+      GalacticMax.score.distance = Math.floor(this.player.x / 100)
+      this.scoreText.text = 'Score: ' + GalacticMax.score.total()
 
       if (this.player.alive) {
         if (this.camera.x + this.camera.width + 100 > this.nextStartX) {
@@ -189,8 +189,8 @@ TRCGame.playState = function (environment) {
       }
 
       if (this.keys.up.isDown) {
-        TRCGame.score.collectibles.gasCan = 5
-        TRCGame.score.collectibles.screwdriver = 7
+        GalacticMax.score.collectibles.gasCan = 5
+        GalacticMax.score.collectibles.screwdriver = 7
         this.game.state.start('win_space')
       }
     },
@@ -218,7 +218,7 @@ TRCGame.playState = function (environment) {
       return platforms[platforms.length - 1]
     },
 
-    generateNextSegment: TRCGame.generateNextSegment(environment),
+    generateNextSegment: GalacticMax.generateNextSegment(environment),
 
     killAlien: function (bullet, alien) {
       if (alien.alive) {
@@ -226,7 +226,7 @@ TRCGame.playState = function (environment) {
         alien.alive = false
         alien.animations.play('die')
 
-        TRCGame.score.bonus += 200
+        GalacticMax.score.bonus += 200
       }
     },
 
@@ -248,7 +248,7 @@ TRCGame.playState = function (environment) {
         bullet.events.onOutOfBounds.add(function () {
           bullet.destroy()
         }, this)
-        if (TRCGame.upgrades.trishot) {
+        if (GalacticMax.upgrades.trishot) {
           var high_bullet = this.bullets.create(this.player.x, this.player.y - 9, 'bullet')
           high_bullet.body.gravity.y = 0
           high_bullet.body.velocity.x = 500 * sign
@@ -266,7 +266,7 @@ TRCGame.playState = function (environment) {
             low_bullet.destroy()
           }, this)
         }
-        if (TRCGame.upgrades.rapidfire) {
+        if (GalacticMax.upgrades.rapidfire) {
           this.game.sound.play('sfx/shoot_rapidfire')
           this.fire.next = Date.now() + 100
         } else {
@@ -286,8 +286,8 @@ TRCGame.playState = function (environment) {
 
     collect: function (player, collectible) {
       collectible.destroy()
-      TRCGame.score.collectibles[collectible.key]++
-      TRCGame.score.bonus += 100
+      GalacticMax.score.collectibles[collectible.key]++
+      GalacticMax.score.bonus += 100
 
       this.updateScoreIcons()
 
@@ -295,13 +295,13 @@ TRCGame.playState = function (environment) {
     },
 
     updateScoreIcons: function () {
-      while (this.gasCanScoreLayer.total < TRCGame.score.collectibles['gasCan']) {
+      while (this.gasCanScoreLayer.total < GalacticMax.score.collectibles['gasCan']) {
         var xOffset = this.gasCanScoreLayer.total * 8
         var can = this.gasCanScoreLayer.create(this.game.canvas.width - xOffset, 0, 'gasCan')
         can.anchor.setTo(1, 0)
       }
 
-      while (this.screwdriverScoreLayer.total < TRCGame.score.collectibles['screwdriver']) {
+      while (this.screwdriverScoreLayer.total < GalacticMax.score.collectibles['screwdriver']) {
         var xOffset2 = this.screwdriverScoreLayer.total * 8
         var screwdriver = this.screwdriverScoreLayer.create(this.game.canvas.width - xOffset2, 8, 'screwdriver')
         screwdriver.anchor.setTo(1, 0)
@@ -316,15 +316,15 @@ TRCGame.playState = function (environment) {
 
     win: function () {
       this.player.kill()
-      TRCGame.game.state.start('win_' + environment)
+      GalacticMax.game.state.start('win_' + environment)
     },
 
     lose: function () {
       this.player.kill()
       this.game.sound.play('sfx/hurt')
-      TRCGame.game.state.start('lose')
+      GalacticMax.game.state.start('lose')
     },
 
-    render: TRCGame.mirrorCanvases
+    render: GalacticMax.mirrorCanvases
   }
 }

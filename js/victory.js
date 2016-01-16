@@ -1,8 +1,8 @@
-/*global TRCGame*/
+/*global GalacticMax*/
 
-TRCGame.victoryState = {
+GalacticMax.victoryState = {
   create: function () {
-    var game = TRCGame.game
+    var game = GalacticMax.game
 
     game.world.setBounds(0, 0, game.camera.width, game.camera.height)
 
@@ -39,5 +39,5 @@ TRCGame.victoryState = {
       {font: '20px League Spartan', fill: '#fff'})
   },
 
-  render: TRCGame.mirrorCanvases
+  render: GalacticMax.mirrorCanvases
 }

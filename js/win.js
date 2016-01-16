@@ -1,9 +1,9 @@
-/*global TRCGame, Phaser*/
+/*global GalacticMax, Phaser*/
 
-TRCGame.winState = function (environment) {
+GalacticMax.winState = function (environment) {
   return {
     create: function () {
-      var game = TRCGame.game
+      var game = GalacticMax.game
 
       game.sound.stopAll()
 
@@ -111,8 +111,8 @@ TRCGame.winState = function (environment) {
           this.continue()
         } else {
           if (selected.alpha !== 0.5) {
-            TRCGame.upgrades[selected.name] = true
-            TRCGame.score.collectibles['screwdriver'] -= 5
+            GalacticMax.upgrades[selected.name] = true
+            GalacticMax.score.collectibles['screwdriver'] -= 5
             this.updateScoreIcons()
             this.updateUpgrades()
             this.game.sound.play('sfx/powerup')
@@ -126,11 +126,11 @@ TRCGame.winState = function (environment) {
 
     continue: function () {
       if (environment === 'space') {
-        TRCGame.game.state.start('play_venus')
+        GalacticMax.game.state.start('play_venus')
       } else if (environment === 'venus') {
-        TRCGame.game.state.start('play_mothership')
+        GalacticMax.game.state.start('play_mothership')
       } else {
-        TRCGame.game.state.start('victory')
+        GalacticMax.game.state.start('victory')
       }
     },
 
@@ -138,14 +138,14 @@ TRCGame.winState = function (environment) {
       this.gasCanScoreLayer.removeAll()
       this.screwdriverScoreLayer.removeAll()
 
-      while (this.gasCanScoreLayer.total < TRCGame.score.collectibles['gasCan']) {
+      while (this.gasCanScoreLayer.total < GalacticMax.score.collectibles['gasCan']) {
         var xOffset = this.gasCanScoreLayer.total * 16
         var can = this.gasCanScoreLayer.create(xOffset, 0, 'gasCan')
         can.anchor.setTo(0, 0)
         can.scale.setTo(2, 2)
       }
 
-      while (this.screwdriverScoreLayer.total < TRCGame.score.collectibles['screwdriver']) {
+      while (this.screwdriverScoreLayer.total < GalacticMax.score.collectibles['screwdriver']) {
         var xOffset2 = this.screwdriverScoreLayer.total * 16
         var screwdriver = this.screwdriverScoreLayer.create(-xOffset2, 0, 'screwdriver')
         screwdriver.anchor.setTo(1, 0)
@@ -154,15 +154,15 @@ TRCGame.winState = function (environment) {
     },
 
     updateUpgrades: function () {
-      for (var upgrade in TRCGame.upgrades) {
-        if (TRCGame.upgrades[upgrade]) {
+      for (var upgrade in GalacticMax.upgrades) {
+        if (GalacticMax.upgrades[upgrade]) {
           this.options[upgrade].alpha = 0.5
           this.options[upgrade].forEach(function (el) {
             if (el instanceof Phaser.Text) {
               el.fill = '#8f8'
             }
           })
-        } else if (TRCGame.score.collectibles['screwdriver'] < 5) {
+        } else if (GalacticMax.score.collectibles['screwdriver'] < 5) {
           this.options[upgrade].alpha = 0.5
           this.options[upgrade].forEach(function (el) {
             if (el instanceof Phaser.Text) {
@@ -175,6 +175,6 @@ TRCGame.winState = function (environment) {
       }
     },
 
-    render: TRCGame.mirrorCanvases
+    render: GalacticMax.mirrorCanvases
   }
 }

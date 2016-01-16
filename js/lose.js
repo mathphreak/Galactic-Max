@@ -1,8 +1,8 @@
-/*global TRCGame, Phaser*/
+/*global GalacticMax, Phaser*/
 
-TRCGame.loseState = {
+GalacticMax.loseState = {
   create: function () {
-    var game = TRCGame.game
+    var game = GalacticMax.game
     var abusiveMessages = [
       'Get good',
       'Just uninstall'
@@ -26,8 +26,8 @@ TRCGame.loseState = {
   },
 
   restart: function () {
-    TRCGame.game.state.start('play_space')
+    GalacticMax.game.state.start('play_space')
   },
 
-  render: TRCGame.mirrorCanvases
+  render: GalacticMax.mirrorCanvases
 }

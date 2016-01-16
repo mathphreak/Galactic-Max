@@ -1,48 +1,48 @@
 /*global Phaser*/
 
-var TRCGame = {}
+var GalacticMax = {}
 
-TRCGame.pixel = {scale: 2, canvas: null, context: null, width: 0, height: 0}
+GalacticMax.pixel = {scale: 2, canvas: null, context: null, width: 0, height: 0}
 
-TRCGame.mirrorCanvases = function () {
-  TRCGame.pixel.context.drawImage(
-    TRCGame.game.canvas,
+GalacticMax.mirrorCanvases = function () {
+  GalacticMax.pixel.context.drawImage(
+    GalacticMax.game.canvas,
     0,
     0,
-    TRCGame.game.width,
-    TRCGame.game.height,
+    GalacticMax.game.width,
+    GalacticMax.game.height,
     0,
     0,
-    TRCGame.pixel.width,
-    TRCGame.pixel.height
+    GalacticMax.pixel.width,
+    GalacticMax.pixel.height
   )
 }
 
-TRCGame.bootState = {
+GalacticMax.bootState = {
   init: function () {
-    TRCGame.game.canvas.style['display'] = 'none'
+    GalacticMax.game.canvas.style['display'] = 'none'
 
-    TRCGame.pixel.canvas = Phaser.Canvas.create(
-      TRCGame.game,
-      TRCGame.game.width * TRCGame.pixel.scale,
-      TRCGame.game.height * TRCGame.pixel.scale
+    GalacticMax.pixel.canvas = Phaser.Canvas.create(
+      GalacticMax.game,
+      GalacticMax.game.width * GalacticMax.pixel.scale,
+      GalacticMax.game.height * GalacticMax.pixel.scale
     )
 
-    TRCGame.pixel.context = TRCGame.pixel.canvas.getContext('2d')
+    GalacticMax.pixel.context = GalacticMax.pixel.canvas.getContext('2d')
 
-    Phaser.Canvas.addToDOM(TRCGame.pixel.canvas)
+    Phaser.Canvas.addToDOM(GalacticMax.pixel.canvas)
 
-    Phaser.Canvas.setSmoothingEnabled(TRCGame.pixel.context, false)
+    Phaser.Canvas.setSmoothingEnabled(GalacticMax.pixel.context, false)
 
-    TRCGame.pixel.width = TRCGame.pixel.canvas.width
-    TRCGame.pixel.height = TRCGame.pixel.canvas.height
+    GalacticMax.pixel.width = GalacticMax.pixel.canvas.width
+    GalacticMax.pixel.height = GalacticMax.pixel.canvas.height
   },
 
   create: function () {
-    TRCGame.game.physics.startSystem(Phaser.Physics.ARCADE)
+    GalacticMax.game.physics.startSystem(Phaser.Physics.ARCADE)
 
-    TRCGame.game.state.start('load')
+    GalacticMax.game.state.start('load')
   },
 
-  render: TRCGame.mirrorCanvases
+  render: GalacticMax.mirrorCanvases
 }

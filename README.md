@@ -1,4 +1,4 @@
-# TRC-Hackathon-Game
+# Galactic Max
 
 # TODO
 - more useful fire animation

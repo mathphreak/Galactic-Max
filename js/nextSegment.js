@@ -1,6 +1,6 @@
-/*global TRCGame*/
+/*global GalacticMax*/
 
-TRCGame.generateNextSegment = function (environment) {
+GalacticMax.generateNextSegment = function (environment) {
   return function () {
     // Save the current game object
     var game = this.game
@@ -106,7 +106,7 @@ TRCGame.generateNextSegment = function (environment) {
     }
 
     // If we've found at least five gas cans...
-    if (TRCGame.score.collectibles['gasCan'] >= 5) {
+    if (GalacticMax.score.collectibles['gasCan'] >= 5) {
       // 20% of the time...
       if (game.rnd.frac() < 0.05) {
         // Create a rocket

@@ -1,9 +1,9 @@
-/*global TRCGame, Phaser*/
+/*global GalacticMax, Phaser*/
 
-TRCGame.menuState = {
+GalacticMax.menuState = {
   create: function () {
-    var game = TRCGame.game
-    this.nameLabel = game.add.text(20, 20, 'TRC Hackathon\nGame',
+    var game = GalacticMax.game
+    this.nameLabel = game.add.text(20, 20, 'Galactic Max',
       {font: '30px League Spartan', fill: '#ffffff'})
     this.controls = game.add.text(20, 150, 'Z to jump, X to shoot',
       {font: '20px League Spartan', fill: '#ffffff'})
@@ -16,8 +16,8 @@ TRCGame.menuState = {
   },
 
   start: function () {
-    TRCGame.game.state.start('play_space')
+    GalacticMax.game.state.start('play_space')
   },
 
-  render: TRCGame.mirrorCanvases
+  render: GalacticMax.mirrorCanvases
 }

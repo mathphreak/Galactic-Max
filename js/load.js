@@ -1,8 +1,8 @@
-/*global TRCGame*/
+/*global GalacticMax*/
 
-TRCGame.loadState = {
+GalacticMax.loadState = {
   preload: function () {
-    var game = TRCGame.game
+    var game = GalacticMax.game
     this.loadingLabel = game.add.text(20, 20, 'loading...',
       {font: '20px League Spartan', fill: '#ffffff'})
 
@@ -44,8 +44,8 @@ TRCGame.loadState = {
   },
 
   create: function () {
-    TRCGame.game.state.start('menu')
+    GalacticMax.game.state.start('menu')
   },
 
-  render: TRCGame.mirrorCanvases
+  render: GalacticMax.mirrorCanvases
 }
