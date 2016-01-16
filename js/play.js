@@ -5,9 +5,14 @@ var playState = {
     game.renderer.renderSession.roundPixels = true
     game.stage.smoothed = false
 
+    game.world.setBounds(0, 0, 9001, game.world.height)
+
     this.score = 0
 
     game.physics.startSystem(Phaser.Physics.ARCADE)
+
+    this.background = game.add.tileSprite(0, 0, game.canvas.width, game.canvas.height, 'background')
+    this.background.scale.setTo(2, 2)
 
     var platforms = game.add.group()
     this.platforms = platforms
@@ -18,8 +23,6 @@ var playState = {
       ground.scale.setTo(2, 2)
       ground.body.immovable = true
     }
-
-    game.world.setBounds(0, 0, 9001, game.world.height)
 
     /*
     var ledge = platforms.create(400, 400, 'ground')
@@ -110,6 +113,9 @@ var playState = {
     if (this.keys.jump.isDown && this.player.body.touching.down) {
       this.player.body.velocity.y = -300
     }
+
+    this.background.x = this.camera.x
+    this.background.tilePosition.setTo(this.camera.x * -0.25, this.camera.y)
   },
 
   killAlien: function (bullet, alien) {
