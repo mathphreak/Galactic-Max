@@ -12,6 +12,8 @@ TRCGame.loadState = {
     game.load.image('alien', 'assets/Alien.png')
     game.load.image('gasCan', 'assets/Gas_Canister.png')
     game.load.image('screwdriver', 'assets/Screwdriver.png')
+    game.load.image('rocket', 'assets/Rocket.png')
+    game.load.image('satellite', 'assets/Sat_Platform.png')
     game.load.spritesheet('crashedSat', 'assets/Animated_CrashSat.png', 16, 16)
     game.load.spritesheet('max', 'assets/All.png', 16, 16)
   },

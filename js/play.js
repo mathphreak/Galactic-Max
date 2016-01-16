@@ -29,7 +29,7 @@ TRCGame.playState = {
     }
 
     // The player and its settings
-    var player = game.add.sprite(32, game.world.height - 100, 'max')
+    var player = game.add.sprite(0, game.world.height - 48, 'max')
     player.scale.setTo(2, 2)
     player.anchor.setTo(1, 0.5)
     this.player = player
@@ -62,12 +62,15 @@ TRCGame.playState = {
 
     var aliens = game.add.group()
     this.aliens = aliens
-
     aliens.enableBody = true
 
     var bullets = game.add.group()
     this.bullets = bullets
     bullets.enableBody = true
+
+    var rockets = game.add.group()
+    this.rockets = rockets
+    rockets.enableBody = true
 
     var uiLayer = game.add.group()
     uiLayer.classType = Phaser.Text
@@ -108,6 +111,7 @@ TRCGame.playState = {
     game.physics.arcade.overlap(this.player, this.aliens, this.lose, null, this)
     game.physics.arcade.overlap(this.player, this.gasCans, this.collect, null, this)
     game.physics.arcade.overlap(this.player, this.screwdrivers, this.collect, null, this)
+    game.physics.arcade.overlap(this.player, this.rockets, this.win, null, this)
 
     this.player.body.velocity.x = 150
     this.player.lastDirection = 1
@@ -119,7 +123,7 @@ TRCGame.playState = {
     }
 
     if (this.keys.jump.isDown && this.player.body.touching.down) {
-      this.player.body.velocity.y = -200
+      this.player.body.velocity.y = -250
     }
 
     this.background.x = this.camera.x
@@ -144,16 +148,16 @@ TRCGame.playState = {
 
   generateNextSegment: function () {
     var game = this.game
-    var startX = this.latestPlatform().x
+    var startX = this.latestPlatform().right
     game.world.setBounds(game.camera.x, 0, startX + 500, game.world.height)
-    if (Math.random() < 0.25) {
+    if (game.rnd.frac() < 0.25) {
       var crashedSat = this.platforms.create(startX,
         game.world.height - 64, 'crashedSat')
       crashedSat.animations.add('burn', [0, 1, 2], 10, true)
       crashedSat.animations.play('burn')
       crashedSat.scale.setTo(2, 2)
       crashedSat.body.immovable = true
-    } else if (Math.random() < 0.25) {
+    } else if (game.rnd.frac() < 0.25) {
       var alien = this.aliens.create(startX, 200, 'alien')
       alien.scale.setTo(2, 2)
       alien.body.bounce.y = 0
@@ -165,13 +169,21 @@ TRCGame.playState = {
       ground.scale.setTo(2, 2)
       ground.body.immovable = true
     }
-    if (Math.random() < 0.25) {
+    if (game.rnd.frac() < 0.25) {
       var gasCan = this.gasCans.create(startX + 200, game.world.height - 64, 'gasCan')
       gasCan.scale.setTo(2, 2)
-    } else if (Math.random() < 0.1) {
+    } else if (game.rnd.frac() < 0.1) {
       var screwdriver = this.screwdrivers.create(startX + 200, game.world.height - 64, 'screwdriver')
       screwdriver.scale.setTo(2, 2)
     }
+
+    //if (TRCGame.collectibles['gasCan'] >= 5) {
+      if (game.rnd.frac() < 0.8) {
+        var rocket = this.rockets.create(startX + 350, game.world.height - 32, 'rocket')
+        rocket.scale.setTo(2, 2)
+        rocket.anchor.setTo(0.5, 1)
+      }
+    //}
   },
 
   latestPlatform: function () {
@@ -221,6 +233,11 @@ TRCGame.playState = {
       var screwdriver = this.screwdriverScoreLayer.create(this.game.canvas.width - xOffset2, 8, 'screwdriver')
       screwdriver.anchor.setTo(1, 0)
     }
+  },
+
+  win: function () {
+    this.player.kill()
+    TRCGame.game.state.start('win')
   },
 
   lose: function () {
