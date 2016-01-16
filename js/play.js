@@ -45,6 +45,9 @@ TRCGame.playState = function (environment) {
       }
       this.nextStartX = 240
 
+      var harmlessPlatforms = game.add.group()
+      this.harmlessPlatforms = harmlessPlatforms
+
       // The player and its settings
       var player = game.add.sprite(0, game.world.height - 48, 'max')
       player.scale.setTo(2, 2)
@@ -117,11 +120,14 @@ TRCGame.playState = function (environment) {
     update: function () {
       var game = TRCGame.game
 
+      game.physics.arcade.collide(this.player, this.harmlessPlatforms)
       game.physics.arcade.collide(this.player, this.platforms, this.checkWall, null, this)
+      game.physics.arcade.collide(this.aliens, this.harmlessPlatforms)
       game.physics.arcade.collide(this.aliens, this.platforms)
 
       game.physics.arcade.overlap(this.bullets, this.aliens, this.killAlien, null, this)
       game.physics.arcade.overlap(this.bullets, this.platforms, this.killBullet, null, this)
+      game.physics.arcade.overlap(this.bullets, this.harmlessPlatforms, this.killBullet, null, this)
       game.physics.arcade.overlap(this.bullets, this.rockets, this.killRocket, null, this)
       game.physics.arcade.overlap(this.player, this.aliens, this.lose, null, this)
       game.physics.arcade.overlap(this.player, this.gasCans, this.collect, null, this)

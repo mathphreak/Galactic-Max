@@ -30,16 +30,12 @@ TRCGame.generateNextSegment = function (environment) {
 
       // Mark as immovable
       crashedSat.body.immovable = true
-
     } else if (game.rnd.frac() < 0.6) {
-        var random = game.rnd.integerInRange(80,150)
-          var normalSat = this.platforms.create(startX ,
-            game.world.height - 100 , 'satellite')
-            normalSat.scale.setTo(2, 2)
-            normalSat.body.immovable = true
-
-
-
+      // For a harmless platform, use this.harmlessPlatforms.create
+      var normalSat = this.platforms.create(startX,
+        game.world.height - 100, 'satellite')
+      normalSat.scale.setTo(2, 2)
+      normalSat.body.immovable = true
       // Otherwise, with a 25% chance, generate an alien
     } else if (game.rnd.frac() < 0.25) {
       // Create the alien at (startX, 200)
