@@ -1,6 +1,6 @@
 /*global game, Phaser*/
 
-var win = {
+var winState = {
   create: function () {
     this.nameLabel = game.add.text(80, 80, 'You win!',
             {font: '50px Junction', fill: '#ffffff'})

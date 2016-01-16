@@ -83,7 +83,7 @@ var playState = {
 
     game.physics.arcade.collide(this.stars, this.platforms)
 
-    game.physics.arcade.overlap(this.player, this.stars, this.collectStar, this, this)
+    game.physics.arcade.overlap(this.player, this.stars, this.collectStar, null, this)
   },
 
   collectStar: function (player, star) {
