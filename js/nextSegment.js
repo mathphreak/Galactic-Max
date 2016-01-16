@@ -12,7 +12,7 @@ TRCGame.generateNextSegment = function (environment) {
     game.world.setBounds(game.camera.x, 0, startX + 500, game.world.height)
 
     // With a 25% chance, generate a crashed satellite
-    if (game.rnd.frac() < 0.25) {
+    if (game.rnd.frac() < 0.05) {
       // Create the satellite at (startX, game.world.height - 64)
       // with the image called 'crashedSat'
       var crashedSat = this.platforms.create(startX,
@@ -30,17 +30,18 @@ TRCGame.generateNextSegment = function (environment) {
 
       // Mark as immovable
       crashedSat.body.immovable = true
-    } else if (game.rnd.frac() < 0.6) {
+    } else if (game.rnd.frac() < 0.4) {
       // For a harmless platform, use this.harmlessPlatforms.create
-      var normalSat = this.platforms.create(startX,
+      var normalSat = this.harmlessPlatforms.create(startX,
         game.world.height - 100, 'satellite')
       normalSat.scale.setTo(2, 2)
       normalSat.body.immovable = true
       // Otherwise, with a 25% chance, generate an alien
-    } else if (game.rnd.frac() < 0.25) {
+    }  if (game.rnd.frac() < 0.2) {
       // Create the alien at (startX, 200)
       // with the image called 'alien'
-      var alien = this.aliens.create(startX, 200, 'alien')
+      var alienArray = [200,130]
+      var alien = this.aliens.create(startX, game.rnd.pick(alienArray), 'alien')
 
       // Add an animation called 'die' using frames 0, 1, and 2
       // for 30 frames each that does not loop
@@ -77,7 +78,7 @@ TRCGame.generateNextSegment = function (environment) {
 
     // 1/4 of the time, generate a gas can
     if (game.rnd.frac() < 0.25) {
-      var gasCan = this.gasCans.create(startX + 200, game.world.height - 90, 'gasCan')
+      var gasCan = this.gasCans.create(startX + 200, game.world.height - 120, 'gasCan')
       gasCan.scale.setTo(2, 2)
       // Otherwise, 1/10 of the time, generate a screwdriver
     } else if (game.rnd.frac() < 0.1) {
@@ -88,7 +89,7 @@ TRCGame.generateNextSegment = function (environment) {
     // If we've found at least five gas cans...
     if (TRCGame.score.collectibles['gasCan'] >= 10) {
       // 20% of the time...
-      if (game.rnd.frac() < 0.1) {
+      if (game.rnd.frac() < 0.2) {
         // Create a rocket
         var rocket = this.rockets.create(startX + 350, game.world.height - 32, 'rocket')
 
