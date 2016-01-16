@@ -15,7 +15,7 @@ TRCGame.generateNextSegment = function (environment) {
     if (game.rnd.frac() < 0.05) {
       // Create the satellite at (startX, game.world.height - 64)
       // with the image called 'crashedSat'
-      var crashedSat = this.platforms.create(startX,
+      var crashedSat = this.dangerPlatforms.create(startX,
         game.world.height - 64, 'crashedSat')
 
       // Add an animation called 'burn' using frames 0, 1, and 2
@@ -39,7 +39,8 @@ TRCGame.generateNextSegment = function (environment) {
       // Otherwise, with a 25% chance, generate an alien
     }
 
-    if (game.rnd.frac() < 0.2) {
+    if (game.rnd.frac() < 0.2 &&
+      (!this.lastDangerPlatform() || this.lastDangerPlatform().x < startX - 10)) {
       // Create the alien at (startX, 200)
       // with the image called 'alien'
       var alienArray = [200, 130]
@@ -93,7 +94,7 @@ TRCGame.generateNextSegment = function (environment) {
     }
 
     // 1/4 of the time, generate a gas can
-    if (game.rnd.frac() < 0.25) {
+    if (game.rnd.frac() < 0.15) {
       var gasCan = this.gasCans.create(startX + 200, game.world.height - 120, 'gasCan')
       gasCan.scale.setTo(2, 2)
       // Otherwise, 1/10 of the time, generate a screwdriver
@@ -105,7 +106,7 @@ TRCGame.generateNextSegment = function (environment) {
     // If we've found at least five gas cans...
     if (TRCGame.score.collectibles['gasCan'] >= 5) {
       // 20% of the time...
-      if (game.rnd.frac() < 0.2) {
+      if (game.rnd.frac() < 0.05) {
         // Create a rocket
         var rocket = this.rockets.create(startX + 350, game.world.height - 32, 'rocket')
 

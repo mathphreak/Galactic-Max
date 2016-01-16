@@ -172,7 +172,7 @@ TRCGame.playState = function (environment) {
       }
 
       if (this.keys.jump.isDown && this.player.body.touching.down) {
-        this.player.body.velocity.y = -250
+        this.player.body.velocity.y = -205
         game.sound.play('sfx/jump')
       }
 
