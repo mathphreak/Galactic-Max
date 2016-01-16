@@ -46,6 +46,8 @@ TRCGame.playState = {
 
     // Follow the player with the camera
     this.game.camera.follow(player, Phaser.Camera.FOLLOW_PLATFORMER)
+    this.game.camera.deadzone.x = game.canvas.width / 6
+    this.game.camera.deadzone.width = game.canvas.width / 6
 
     //  Our animations
     player.animations.add('left_fire', [0], 10, false)
@@ -105,6 +107,10 @@ TRCGame.playState = {
     this.player.lastDirection = 1
     this.player.animations.play('right_move')
 
+    if (this.player.body.blocked.right) {
+      this.lose()
+    }
+
     if (this.keys.fire.isDown) {
       this.fire()
       this.player.animations.play('right_fire')
@@ -128,9 +134,12 @@ TRCGame.playState = {
   generateNextSegment: function () {
     var startX = this.latestPlatform().x
     if (Math.random() < 0.25) {
-      var wall = this.platforms.create(startX, TRCGame.game.world.height - 64, 'crashedSat')
-      wall.scale.setTo(2, 2)
-      wall.body.immovable = true
+      var crashedSat = this.platforms.create(startX,
+        TRCGame.game.world.height - 64, 'crashedSat')
+      crashedSat.animations.add('burn', [0, 1, 2], 10, true)
+      crashedSat.animations.play('burn')
+      crashedSat.scale.setTo(2, 2)
+      crashedSat.body.immovable = true
     } else if (Math.random() < 0.25) {
       var alien = this.aliens.create(startX, 200, 'alien')
       alien.scale.setTo(2, 2)
