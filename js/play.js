@@ -12,7 +12,6 @@ var playState = {
     game.physics.startSystem(Phaser.Physics.ARCADE)
 
     this.background = game.add.tileSprite(0, 0, game.canvas.width, game.canvas.height, 'background')
-    this.background.scale.setTo(2, 2)
 
     var platforms = game.add.group()
     this.platforms = platforms
