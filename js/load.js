@@ -8,7 +8,7 @@ TRCGame.loadState = {
 
     game.load.image('background', 'assets/Background-5.png')
     game.load.image('bullet', 'assets/Projectile.png')
-    game.load.image('platform', 'assets/Steel_Plating.png')
+    game.load.image('platform', 'assets/Steel_Plating2.png')
     game.load.image('alien', 'assets/Alien.png')
     game.load.image('gasCan', 'assets/Gas_Canister.png')
     game.load.spritesheet('crashedSat', 'assets/Animated_CrashSat.png', 16, 16)

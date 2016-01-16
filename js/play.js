@@ -95,7 +95,7 @@ TRCGame.playState = {
   update: function () {
     var game = TRCGame.game
 
-    game.physics.arcade.collide(this.player, this.platforms)
+    game.physics.arcade.collide(this.player, this.platforms, this.checkWall, null, this)
     game.physics.arcade.collide(this.aliens, this.platforms)
 
     game.physics.arcade.overlap(this.bullets, this.aliens, this.killAlien, null, this)
@@ -106,10 +106,6 @@ TRCGame.playState = {
     this.player.body.velocity.x = 150
     this.player.lastDirection = 1
     this.player.animations.play('right_move')
-
-    if (this.player.body.blocked.right) {
-      this.lose()
-    }
 
     if (this.keys.fire.isDown) {
       this.fire()
@@ -128,6 +124,13 @@ TRCGame.playState = {
 
     if (this.camera.x + this.camera.width + 100 > this.latestPlatform().x) {
       this.generateNextSegment()
+    }
+  },
+
+  checkWall: function (player, platform) {
+    var angle = this.game.physics.arcade.angleBetween(player, platform)
+    if (angle === -0.5 * Math.PI) {
+      this.lose()
     }
   },
 
