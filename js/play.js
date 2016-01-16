@@ -139,6 +139,15 @@ TRCGame.playState = function (environment) {
       this.player.lastDirection = 1
       this.player.animations.play('right_move')
 
+      if (TRCGame.upgrades.speed_control) {
+        if (this.keys.right.isDown) {
+          this.player.body.velocity.x += 50
+        }
+        if (this.keys.left.isDown) {
+          this.player.body.velocity.x -= 50
+        }
+      }
+
       if (this.keys.fire.isDown) {
         this.fire()
         this.player.animations.play('right_fire')
