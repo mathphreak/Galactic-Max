@@ -213,7 +213,11 @@ TRCGame.playState = function (environment) {
         bullet.events.onOutOfBounds.add(function () {
           bullet.destroy()
         }, this)
-        this.fire.next = Date.now() + 250
+        if (TRCGame.upgrades.rapidfire) {
+          this.fire.next = Date.now() + 100
+        } else {
+          this.fire.next = Date.now() + 500
+        }
       }
     },
 
