@@ -8,7 +8,13 @@ TRCGame.playState = {
 
     game.world.setBounds(0, 0, 9001, game.world.height)
 
-    this.score = 0
+    this.score = {
+      distance: 0,
+      bonus: 0,
+      total: function () {
+        return this.distance + this.bonus
+      }
+    }
 
     game.physics.startSystem(Phaser.Physics.ARCADE)
 
@@ -70,7 +76,19 @@ TRCGame.playState = {
     this.uiLayer = uiLayer
 
     this.scoreText = uiLayer.create(16, 16, 'Score: 0',
-              {font: '10px League Spartan', fill: '#fff'})
+      {font: '10px League Spartan', fill: '#fff'})
+
+    var gasCanScoreLayer = game.add.group(uiLayer)
+    this.gasCanScoreLayer = gasCanScoreLayer
+
+    this.collectibles = {
+      gasCan: 0
+    }
+
+    var gasCans = game.add.group()
+    this.gasCans = gasCans
+
+    gasCans.enableBody = true
   },
 
   update: function () {
@@ -82,6 +100,7 @@ TRCGame.playState = {
     game.physics.arcade.overlap(this.bullets, this.aliens, this.killAlien, null, this)
     game.physics.arcade.overlap(this.bullets, this.platforms, this.killBullet, null, this)
     game.physics.arcade.overlap(this.player, this.aliens, this.lose, null, this)
+    game.physics.arcade.overlap(this.player, this.gasCans, this.collect, null, this)
 
     this.player.body.velocity.x = 150
     this.player.lastDirection = 1
@@ -93,11 +112,14 @@ TRCGame.playState = {
     }
 
     if (this.keys.jump.isDown && this.player.body.touching.down) {
-      this.player.body.velocity.y = -300
+      this.player.body.velocity.y = -200
     }
 
     this.background.x = this.camera.x
     this.background.tilePosition.setTo(this.camera.x * -0.25, this.camera.y)
+
+    this.score.distance = Math.floor(this.player.x / 100)
+    this.scoreText.text = 'Score: ' + this.score.total()
 
     if (this.camera.x + this.camera.width + 100 > this.latestPlatform().x) {
       this.generateNextSegment()
@@ -106,11 +128,6 @@ TRCGame.playState = {
 
   generateNextSegment: function () {
     var startX = this.latestPlatform().x
-    for (var i = startX; i < startX + 500; i += 48) {
-      var ground = this.platforms.create(i, TRCGame.game.world.height - 32, 'platform')
-      ground.scale.setTo(2, 2)
-      ground.body.immovable = true
-    }
     if (Math.random() < 0.25) {
       var wall = this.platforms.create(startX, TRCGame.game.world.height - 64, 'platform')
       wall.scale.setTo(2, 2)
@@ -122,6 +139,15 @@ TRCGame.playState = {
       alien.body.gravity.y = 300
       alien.body.collideWorldBounds = true
     }
+    for (var i = startX; i < startX + 500; i += 48) {
+      var ground = this.platforms.create(i, TRCGame.game.world.height - 32, 'platform')
+      ground.scale.setTo(2, 2)
+      ground.body.immovable = true
+    }
+    if (Math.random() < 0.25) {
+      var gasCan = this.gasCans.create(startX + 200, TRCGame.game.world.height - 64, 'gasCan')
+      gasCan.scale.setTo(2, 2)
+    }
   },
 
   latestPlatform: function () {
@@ -130,15 +156,10 @@ TRCGame.playState = {
   },
 
   killAlien: function (bullet, alien) {
-    bullet.kill()
-    alien.kill()
+    bullet.destroy()
+    alien.destroy()
 
-    this.score += 10
-    this.scoreText.text = 'Score: ' + this.score
-
-    if (this.aliens.total === 0) {
-      TRCGame.game.state.start('win')
-    }
+    this.score.bonus += 200
   },
 
   fire: function () {
@@ -149,14 +170,20 @@ TRCGame.playState = {
       bullet.body.velocity.x = 500 * sign
       bullet.scale.setTo(2 * sign, 2)
       bullet.events.onOutOfBounds.add(function () {
-        bullet.kill()
+        bullet.destroy()
       }, this)
       this.fire.next = Date.now() + 250
     }
   },
 
   killBullet: function (bullet) {
-    bullet.kill()
+    bullet.destroy()
+  },
+
+  collect: function (player, collectible) {
+    collectible.destroy()
+    this.collectibles[collectible.key]++
+    this.score.bonus += 100
   },
 
   lose: function () {
