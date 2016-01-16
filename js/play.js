@@ -47,6 +47,7 @@ TRCGame.playState = function (environment) {
 
       var harmlessPlatforms = game.add.group()
       this.harmlessPlatforms = harmlessPlatforms
+      harmlessPlatforms.enableBody = true
 
       // The player and its settings
       var player = game.add.sprite(0, game.world.height - 48, 'max')
@@ -175,7 +176,7 @@ TRCGame.playState = function (environment) {
 
     killAlien: function (bullet, alien) {
       if (alien.alive) {
-        bullet.destroy()
+        this.killBullet(bullet)
         alien.alive = false
         alien.animations.play('die')
 
@@ -185,7 +186,7 @@ TRCGame.playState = function (environment) {
 
     killRocket: function (bullet, rocket) {
       if (rocket.alive) {
-        bullet.destroy()
+        this.killBullet(bullet)
         rocket.alive = false
         rocket.animations.play('explode')
       }
