@@ -1,9 +1,10 @@
 /*global Phaser, bootState, loadState, menuState, playState, winState*/
 
-var game = new Phaser.Game(800,
-  600,
-  Phaser.AUTO,
-  'gameDiv')
+var game = new Phaser.Game(
+  320,
+  280,
+  Phaser.CANVAS,
+  '')
 
 game.state.add('boot', bootState)
 game.state.add('load', loadState)

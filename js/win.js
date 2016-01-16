@@ -2,10 +2,10 @@
 
 var winState = {
   create: function () {
-    this.nameLabel = game.add.text(80, 80, 'You win!',
-            {font: '50px League Spartan', fill: '#ffffff'})
-    this.winLabel = game.add.text(80, 360, 'Press Z to restart',
-            {font: '50px League Spartan', fill: '#ffffff'})
+    this.nameLabel = game.add.text(20, 20, 'You win!',
+            {font: '30px League Spartan', fill: '#ffffff'})
+    this.winLabel = game.add.text(20, 200, 'Press Z to restart',
+            {font: '30px League Spartan', fill: '#ffffff'})
 
     var zKey = game.input.keyboard.addKey(Phaser.Keyboard.Z)
 
@@ -14,5 +14,7 @@ var winState = {
 
   restart: function () {
     game.state.start('play')
-  }
+  },
+
+  render: mirrorCanvases
 }

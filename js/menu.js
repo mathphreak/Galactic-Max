@@ -2,10 +2,10 @@
 
 var menuState = {
   create: function () {
-    this.nameLabel = game.add.text(80, 80, 'TRC Hackathon Game',
-            {font: '50px League Spartan', fill: '#ffffff'})
-    this.startLabel = game.add.text(80, 360, 'Press Z to start',
-            {font: '50px League Spartan', fill: '#ffffff'})
+    this.nameLabel = game.add.text(20, 20, 'TRC Hackathon\nGame',
+            {font: '30px League Spartan', fill: '#ffffff'})
+    this.startLabel = game.add.text(20, 200, 'Press Z to start',
+            {font: '30px League Spartan', fill: '#ffffff'})
 
     var zKey = game.input.keyboard.addKey(Phaser.Keyboard.Z)
 
@@ -14,5 +14,7 @@ var menuState = {
 
   start: function () {
     game.state.start('play')
-  }
+  },
+
+  render: mirrorCanvases
 }
