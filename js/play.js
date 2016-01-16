@@ -67,7 +67,6 @@ TRCGame.playState = {
 
     var bullets = game.add.group()
     this.bullets = bullets
-
     bullets.enableBody = true
 
     var uiLayer = game.add.group()
@@ -129,7 +128,7 @@ TRCGame.playState = {
   generateNextSegment: function () {
     var startX = this.latestPlatform().x
     if (Math.random() < 0.25) {
-      var wall = this.platforms.create(startX, TRCGame.game.world.height - 64, 'platform')
+      var wall = this.platforms.create(startX, TRCGame.game.world.height - 64, 'crashedSat')
       wall.scale.setTo(2, 2)
       wall.body.immovable = true
     } else if (Math.random() < 0.25) {
@@ -177,7 +176,8 @@ TRCGame.playState = {
   },
 
   killBullet: function (bullet) {
-    bullet.destroy()
+    bullet.parent.remove(bullet, false)
+    bullet.pendingDestroy = true
   },
 
   collect: function (player, collectible) {
