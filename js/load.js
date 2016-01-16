@@ -5,11 +5,12 @@ var loadState = {
     this.loadingLabel = game.add.text(20, 20, 'loading...',
           {font: '20px League Spartan', fill: '#ffffff'})
 
-    game.load.image('sky', 'assets/tutorial_sky.png')
+    // game.load.image('sky', 'assets/tutorial_sky.png')
     game.load.image('bullet', 'assets/Projectile.png')
     game.load.image('platform', 'assets/Sat_Platform.png')
-    game.load.image('alien', 'assets/Alien.png')
+    // game.load.image('alien', 'assets/Alien.png')
     game.load.spritesheet('dude', 'assets/tutorial_dude.png', 32, 48)
+    game.load.spritesheet('max', 'assets/All.png', 8, 16)
   },
 
   create: function () {

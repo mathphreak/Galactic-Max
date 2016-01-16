@@ -19,6 +19,8 @@ var playState = {
       ground.body.immovable = true
     }
 
+    game.world.setBounds(0, 0, 9001, game.world.height)
+
     /*
     var ledge = platforms.create(400, 400, 'ground')
 
@@ -30,7 +32,8 @@ var playState = {
     */
 
     // The player and its settings
-    var player = game.add.sprite(32, game.world.height - 100, 'dude')
+    var player = game.add.sprite(32, game.world.height - 100, 'max')
+    player.scale.setTo(2, 2)
     this.player = player
 
     //  We need to enable physics on the player
@@ -44,9 +47,14 @@ var playState = {
     // Follow the player with the camera
     this.game.camera.follow(player)
 
-    //  Our two animations, walking left and right.
-    player.animations.add('left', [0, 1, 2, 3], 10, true)
-    player.animations.add('right', [5, 6, 7, 8], 10, true)
+    //  Our animations
+    player.animations.add('left_fire', [1], 10, false)
+    player.animations.add('left_move', [2, 3], 10, true)
+    player.animations.add('left_idle', [4], 10, true)
+    player.animations.add('idle', [5], 10, true)
+    player.animations.add('right_idle', [6], 10, true)
+    player.animations.add('right_move', [7, 8], 10, true)
+    player.animations.add('right_fire', [9], 10, false)
 
     this.keys = game.input.keyboard.createCursorKeys()
     this.keys.jump = game.input.keyboard.addKey(Phaser.Keyboard.Z)
@@ -55,6 +63,7 @@ var playState = {
     var aliens = game.add.group()
     this.aliens = aliens
 
+    /*
     aliens.enableBody = true
 
     for (var j = 2; j < 5; j++) {
@@ -64,6 +73,7 @@ var playState = {
       alien.body.gravity.y = 300
       alien.body.collideWorldBounds = true
     }
+    */
 
     var bullets = game.add.group()
     this.bullets = bullets
@@ -79,10 +89,11 @@ var playState = {
 
     this.player.body.velocity.x = 150
     this.player.lastDirection = 1
-    this.player.animations.play('right')
+    this.player.animations.play('right_move')
 
     if (this.keys.fire.isDown) {
       this.fire()
+      this.player.animations.play('right_fire')
     }
 
     if (this.keys.jump.isDown && this.player.body.touching.down) {
