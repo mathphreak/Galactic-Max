@@ -110,7 +110,7 @@ GalacticMax.generateNextSegment = function (environment) {
     // If we've found at least five gas cans...
     if (GalacticMax.score.collectibles['gasCan'] >= 5) {
       // 20% of the time...
-      if (game.rnd.frac() < 0.05) {
+      if (game.rnd.frac() < 0.07) {
         // Create a rocket
         var rocket = this.rockets.create(startX + 350, game.world.height - 32, 'rocket')
 

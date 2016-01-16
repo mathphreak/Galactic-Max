@@ -9,6 +9,9 @@ GalacticMax.winState = function (environment) {
 
       game.world.setBounds(0, 0, game.camera.width, game.camera.height)
 
+      GalacticMax.score.bonus += GalacticMax.score.distance
+      GalacticMax.score.distance = 0
+
       var gasCanScoreLayer = game.add.group()
       this.gasCanScoreLayer = gasCanScoreLayer
 
@@ -17,8 +20,9 @@ GalacticMax.winState = function (environment) {
 
       this.updateScoreIcons()
 
-      this.titleLabel = game.add.text(20, 15, 'Level Complete',
-        {font: '30px League Spartan', fill: '#ffffff'})
+      this.titleLabel = game.add.text(20, 15,
+        'Level Complete - Score: ' + GalacticMax.score.total(),
+        {font: '20px League Spartan', fill: '#ffffff'})
       this.instructions = game.add.text(20, 220, 'Z to move\nX to select',
         {font: '20px League Spartan', fill: '#ffffff'})
 
