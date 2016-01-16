@@ -152,10 +152,22 @@ TRCGame.winState = function (environment) {
 
     updateUpgrades: function () {
       for (var upgrade in TRCGame.upgrades) {
-        if (TRCGame.score.collectibles['screwdriver'] < 5) {
+        if (TRCGame.upgrades[upgrade]) {
           this.options[upgrade].alpha = 0.5
+          this.options[upgrade].forEach(function (el) {
+            if (el instanceof Phaser.Text) {
+              el.fill = '#8f8'
+            }
+          })
+        } else if (TRCGame.score.collectibles['screwdriver'] < 5) {
+          this.options[upgrade].alpha = 0.5
+          this.options[upgrade].forEach(function (el) {
+            if (el instanceof Phaser.Text) {
+              el.fill = '#f88'
+            }
+          })
         } else {
-          this.options[upgrade].alpha = (TRCGame.upgrades[upgrade] ? 0.5 : 1)
+          this.options[upgrade].alpha = 1
         }
       }
     },
