@@ -9,8 +9,6 @@ var playState = {
 
     game.physics.startSystem(Phaser.Physics.ARCADE)
 
-    game.add.sprite(0, 0, 'sky')
-
     var platforms = game.add.group()
     this.platforms = platforms
 
@@ -32,7 +30,7 @@ var playState = {
     */
 
     // The player and its settings
-    var player = game.add.sprite(32, game.world.height - 150, 'dude')
+    var player = game.add.sprite(32, game.world.height - 100, 'dude')
     this.player = player
 
     //  We need to enable physics on the player
@@ -42,6 +40,9 @@ var playState = {
     player.body.bounce.y = 0
     player.body.gravity.y = 300
     player.body.collideWorldBounds = true
+
+    // Follow the player with the camera
+    this.game.camera.follow(player)
 
     //  Our two animations, walking left and right.
     player.animations.add('left', [0, 1, 2, 3], 10, true)
@@ -57,7 +58,7 @@ var playState = {
     aliens.enableBody = true
 
     for (var j = 2; j < 5; j++) {
-      var alien = aliens.create(j * 70, 0, 'alien')
+      var alien = aliens.create(j * 70, 200, 'alien')
       alien.scale.setTo(2, 2)
       alien.body.bounce.y = 0
       alien.body.gravity.y = 300
@@ -76,20 +77,9 @@ var playState = {
   update: function () {
     game.physics.arcade.collide(this.player, this.platforms)
 
-    this.player.body.velocity.x = 0
-
-    if (this.keys.left.isDown) {
-      this.player.body.velocity.x = -150
-      this.player.lastDirection = -1
-      this.player.animations.play('left')
-    } else if (this.keys.right.isDown) {
-      this.player.body.velocity.x = 150
-      this.player.lastDirection = 1
-      this.player.animations.play('right')
-    } else {
-      this.player.animations.stop()
-      this.player.frame = 4
-    }
+    this.player.body.velocity.x = 150
+    this.player.lastDirection = 1
+    this.player.animations.play('right')
 
     if (this.keys.fire.isDown) {
       this.fire()
@@ -101,12 +91,12 @@ var playState = {
 
     game.physics.arcade.collide(this.aliens, this.platforms)
 
-    game.physics.arcade.overlap(this.bullets, this.aliens, this.collectStar, null, this)
+    game.physics.arcade.overlap(this.bullets, this.aliens, this.killAlien, null, this)
     game.physics.arcade.overlap(this.bullets, this.platforms, this.killBullet, null, this)
     game.physics.arcade.overlap(this.player, this.aliens, this.lose, null, this)
   },
 
-  collectStar: function (bullet, alien) {
+  killAlien: function (bullet, alien) {
     bullet.kill()
     alien.kill()
 

@@ -6,12 +6,8 @@ var loadState = {
           {font: '20px League Spartan', fill: '#ffffff'})
 
     game.load.image('sky', 'assets/tutorial_sky.png')
-    game.load.image('ground', 'assets/tutorial_platform.png')
-    game.load.image('star', 'assets/tutorial_star.png')
     game.load.image('bullet', 'assets/Projectile.png')
     game.load.image('platform', 'assets/Sat_Platform.png')
-    game.load.image('max_side_l', 'assets/Max_Side_L.png')
-    game.load.image('max_side_r', 'assets/Max_Side_R.png')
     game.load.image('alien', 'assets/Alien.png')
     game.load.spritesheet('dude', 'assets/tutorial_dude.png', 32, 48)
   },
