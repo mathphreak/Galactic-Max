@@ -6,7 +6,7 @@ GalacticMax.loadState = {
     this.loadingLabel = game.add.text(20, 20, 'loading...',
       {font: '20px League Spartan', fill: '#ffffff'})
 
-    game.load.audio('music', 'assets/Hackathon.wav')
+    game.load.audio('music', 'assets/GalacticMaxTheme.wav')
 
     game.load.audio('sfx/shoot', 'assets/Laser_Shoot.wav')
     game.load.audio('sfx/shoot_rapidfire', 'assets/Laser_Shoot2.wav')
