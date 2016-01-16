@@ -85,6 +85,10 @@ TRCGame.playState = function (environment) {
       this.aliens = aliens
       aliens.enableBody = true
 
+      var spaceships = game.add.group()
+      this.spaceships = spaceships
+      spaceships.enableBody = true
+
       var bullets = game.add.group()
       this.bullets = bullets
       bullets.enableBody = true
@@ -125,12 +129,16 @@ TRCGame.playState = function (environment) {
       game.physics.arcade.collide(this.player, this.platforms, this.checkWall, null, this)
       game.physics.arcade.collide(this.aliens, this.harmlessPlatforms)
       game.physics.arcade.collide(this.aliens, this.platforms)
+      game.physics.arcade.collide(this.spaceships, this.harmlessPlatforms)
+      game.physics.arcade.collide(this.spaceships, this.platforms)
 
       game.physics.arcade.overlap(this.bullets, this.aliens, this.killAlien, null, this)
+      game.physics.arcade.overlap(this.bullets, this.spaceships, this.killAlien, null, this)
       game.physics.arcade.overlap(this.bullets, this.platforms, this.killBullet, null, this)
       game.physics.arcade.overlap(this.bullets, this.harmlessPlatforms, this.killBullet, null, this)
       game.physics.arcade.overlap(this.bullets, this.rockets, this.killRocket, null, this)
-      game.physics.arcade.overlap(this.player, this.aliens, this.lose, null, this)
+      game.physics.arcade.overlap(this.player, this.aliens, this.checkAlien, null, this)
+      game.physics.arcade.overlap(this.player, this.spaceships, this.checkAlien, null, this)
       game.physics.arcade.overlap(this.player, this.gasCans, this.collect, null, this)
       game.physics.arcade.overlap(this.player, this.screwdrivers, this.collect, null, this)
       game.physics.arcade.overlap(this.player, this.rockets, this.enterRocket, null, this)
@@ -179,6 +187,12 @@ TRCGame.playState = function (environment) {
     checkWall: function (player, platform) {
       var angle = this.game.physics.arcade.angleBetween(player, platform)
       if (angle === -0.5 * Math.PI) {
+        this.lose()
+      }
+    },
+
+    checkAlien: function (player, alien) {
+      if (alien.alive) {
         this.lose()
       }
     },

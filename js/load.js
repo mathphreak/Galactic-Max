@@ -9,10 +9,12 @@ TRCGame.loadState = {
     game.load.image('background_space', 'assets/Background-5.png')
     game.load.image('background_venus', 'assets/Planet_Background.png')
     game.load.image('background_mothership', 'assets/Mothership.png')
-    game.load.image('bullet', 'assets/Projectile.png')
+
     game.load.image('platform_space', 'assets/Steel_Plating2.png')
     game.load.image('platform_venus', 'assets/Rocks.png')
     game.load.image('platform_mothership', 'assets/Mothership_Walkway.png')
+
+    game.load.image('bullet', 'assets/Projectile.png')
     game.load.image('gasCan', 'assets/Gas_Canister.png')
     game.load.image('screwdriver', 'assets/Screwdriver.png')
     game.load.image('satellite', 'assets/Sat_Platform.png')
@@ -29,6 +31,7 @@ TRCGame.loadState = {
     game.load.spritesheet('rocket', 'assets/Exploding_Rocket_Anim.png', 24, 32)
     game.load.spritesheet('alien', 'assets/Alien_Death-1.png', 8, 16)
     game.load.spritesheet('player_victory', 'assets/Sicem.png', 16, 32)
+    game.load.spritesheet('spaceship', 'assets/Spaceship_Explode_Anim.png', 16, 24)
   },
 
   create: function () {

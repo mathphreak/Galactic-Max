@@ -37,17 +37,17 @@ TRCGame.generateNextSegment = function (environment) {
       normalSat.scale.setTo(2, 2)
       normalSat.body.immovable = true
       // Otherwise, with a 25% chance, generate an alien
-    }  if (game.rnd.frac() < 0.2) {
+    }
+
+    if (game.rnd.frac() < 0.2) {
       // Create the alien at (startX, 200)
       // with the image called 'alien'
-      var alienArray = [200,130]
+      var alienArray = [200, 130]
       var alien = this.aliens.create(startX, game.rnd.pick(alienArray), 'alien')
 
       // Add an animation called 'die' using frames 0, 1, and 2
-      // for 30 frames each that does not loop
-      // (if this worked properly I would not have changed it to 30,
-      // but that didn't fix it, so I should probably change it back)
-      var alienDeath = alien.animations.add('die', [0, 1, 2], 30, false)
+      // at 10 fps that does not loop
+      var alienDeath = alien.animations.add('die', [0, 1, 2], 10, false)
 
       // Tell this animation that it should kill the alien when it is done
       alienDeath.killOnComplete = true
@@ -60,6 +60,22 @@ TRCGame.generateNextSegment = function (environment) {
 
       // Follow gravity
       alien.body.gravity.y = 300
+    } else if (game.rnd.frac() < 0.1) {
+      var spaceshipPos = game.rnd.integerInRange(0, 130)
+      var spaceship = this.spaceships.create(startX, spaceshipPos, 'spaceship')
+
+      game.physics.arcade.enable(spaceship)
+
+      var spaceshipDeath = spaceship.animations.add('die', [0, 1, 2, 3, 4],
+        10, false)
+
+      spaceshipDeath.killOnComplete = true
+
+      spaceship.scale.setTo(2, 2)
+
+      spaceship.body.bounce.y = 1
+
+      spaceship.body.gravity.y = 300
     }
 
     // Place platforms along thr ground
@@ -87,7 +103,7 @@ TRCGame.generateNextSegment = function (environment) {
     }
 
     // If we've found at least five gas cans...
-    if (TRCGame.score.collectibles['gasCan'] >= 10) {
+    if (TRCGame.score.collectibles['gasCan'] >= 5) {
       // 20% of the time...
       if (game.rnd.frac() < 0.2) {
         // Create a rocket
