@@ -88,6 +88,10 @@ TRCGame.winState = function (environment) {
         {isContinue: true}
       ]
 
+      for (var upgrade in TRCGame.upgrades) {
+        this.options[upgrade].alpha = (TRCGame.upgrades[upgrade] ? 0.5 : 1)
+      }
+
       this.options.selection = {}
 
       this.options.selection.offset = this.options.group.y + 4
