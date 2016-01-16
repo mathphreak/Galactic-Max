@@ -46,7 +46,7 @@ var playState = {
     player.body.collideWorldBounds = true
 
     // Follow the player with the camera
-    this.game.camera.follow(player)
+    this.game.camera.follow(player, Phaser.Camera.FOLLOW_PLATFORMER)
 
     //  Our animations
     player.animations.add('left_fire', [0], 10, false)
@@ -81,12 +81,22 @@ var playState = {
 
     bullets.enableBody = true
 
-    this.scoreText = game.add.text(16, 16, 'Score: 0',
-              {font: '10px League Spartan', fill: '#000'})
+    var uiLayer = game.add.group()
+    uiLayer.classType = Phaser.Text
+    uiLayer.fixedToCamera = true
+    this.uiLayer = uiLayer
+
+    this.scoreText = uiLayer.create(16, 16, 'Score: 0',
+              {font: '10px League Spartan', fill: '#fff'})
   },
 
   update: function () {
     game.physics.arcade.collide(this.player, this.platforms)
+    game.physics.arcade.collide(this.aliens, this.platforms)
+
+    game.physics.arcade.overlap(this.bullets, this.aliens, this.killAlien, null, this)
+    game.physics.arcade.overlap(this.bullets, this.platforms, this.killBullet, null, this)
+    game.physics.arcade.overlap(this.player, this.aliens, this.lose, null, this)
 
     this.player.body.velocity.x = 150
     this.player.lastDirection = 1
@@ -100,12 +110,6 @@ var playState = {
     if (this.keys.jump.isDown && this.player.body.touching.down) {
       this.player.body.velocity.y = -300
     }
-
-    game.physics.arcade.collide(this.aliens, this.platforms)
-
-    game.physics.arcade.overlap(this.bullets, this.aliens, this.killAlien, null, this)
-    game.physics.arcade.overlap(this.bullets, this.platforms, this.killBullet, null, this)
-    game.physics.arcade.overlap(this.player, this.aliens, this.lose, null, this)
   },
 
   killAlien: function (bullet, alien) {
