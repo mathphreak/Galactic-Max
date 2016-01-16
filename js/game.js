@@ -1,16 +1,16 @@
-/*global Phaser, bootState, loadState, menuState, playState, winState*/
+/*global Phaser, TRCGame*/
 
-var game = new Phaser.Game(
+TRCGame.game = new Phaser.Game(
   320,
   280,
   Phaser.CANVAS,
   '')
 
-game.state.add('boot', bootState)
-game.state.add('load', loadState)
-game.state.add('menu', menuState)
-game.state.add('play', playState)
-game.state.add('win', winState)
-game.state.add('lose', loseState)
+TRCGame.game.state.add('boot', TRCGame.bootState)
+TRCGame.game.state.add('load', TRCGame.loadState)
+TRCGame.game.state.add('menu', TRCGame.menuState)
+TRCGame.game.state.add('play', TRCGame.playState)
+TRCGame.game.state.add('win', TRCGame.winState)
+TRCGame.game.state.add('lose', TRCGame.loseState)
 
-game.state.start('boot')
+TRCGame.game.state.start('boot')

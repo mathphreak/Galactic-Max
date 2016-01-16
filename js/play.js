@@ -1,7 +1,8 @@
-/*global game, Phaser*/
+/*global TRCGame, Phaser*/
 
-var playState = {
+TRCGame.playState = {
   create: function () {
+    var game = TRCGame.game
     game.renderer.renderSession.roundPixels = true
     game.stage.smoothed = false
 
@@ -73,6 +74,8 @@ var playState = {
   },
 
   update: function () {
+    var game = TRCGame.game
+
     game.physics.arcade.collide(this.player, this.platforms)
     game.physics.arcade.collide(this.aliens, this.platforms)
 
@@ -104,12 +107,12 @@ var playState = {
   generateNextSegment: function () {
     var startX = this.latestPlatform().x
     for (var i = startX; i < startX + 500; i += 48) {
-      var ground = this.platforms.create(i, game.world.height - 32, 'platform')
+      var ground = this.platforms.create(i, TRCGame.game.world.height - 32, 'platform')
       ground.scale.setTo(2, 2)
       ground.body.immovable = true
     }
     if (Math.random() < 0.25) {
-      var wall = this.platforms.create(startX, game.world.height - 64, 'platform')
+      var wall = this.platforms.create(startX, TRCGame.game.world.height - 64, 'platform')
       wall.scale.setTo(2, 2)
       wall.body.immovable = true
     } else if (Math.random() < 0.25) {
@@ -134,7 +137,7 @@ var playState = {
     this.scoreText.text = 'Score: ' + this.score
 
     if (this.aliens.total === 0) {
-      game.state.start('win')
+      TRCGame.game.state.start('win')
     }
   },
 
@@ -157,8 +160,8 @@ var playState = {
   },
 
   lose: function () {
-    game.state.start('lose')
+    TRCGame.game.state.start('lose')
   },
 
-  render: mirrorCanvases
+  render: TRCGame.mirrorCanvases
 }

@@ -1,36 +1,48 @@
-/*global Phaser, game*/
+/*global Phaser*/
 
-var pixel = {scale: 2, canvas: null, context: null, width: 0, height: 0}
+var TRCGame = {}
 
-var bootState = {
+TRCGame.pixel = {scale: 2, canvas: null, context: null, width: 0, height: 0}
+
+TRCGame.mirrorCanvases = function () {
+  TRCGame.pixel.context.drawImage(
+    TRCGame.game.canvas,
+    0,
+    0,
+    TRCGame.game.width,
+    TRCGame.game.height,
+    0,
+    0,
+    TRCGame.pixel.width,
+    TRCGame.pixel.height
+  )
+}
+
+TRCGame.bootState = {
   init: function () {
-    game.canvas.style['display'] = 'none'
+    TRCGame.game.canvas.style['display'] = 'none'
 
-    pixel.canvas = Phaser.Canvas.create(
-      game,
-      game.width * pixel.scale,
-      game.height * pixel.scale
+    TRCGame.pixel.canvas = Phaser.Canvas.create(
+      TRCGame.game,
+      TRCGame.game.width * TRCGame.pixel.scale,
+      TRCGame.game.height * TRCGame.pixel.scale
     )
 
-    pixel.context = pixel.canvas.getContext('2d')
+    TRCGame.pixel.context = TRCGame.pixel.canvas.getContext('2d')
 
-    Phaser.Canvas.addToDOM(pixel.canvas)
+    Phaser.Canvas.addToDOM(TRCGame.pixel.canvas)
 
-    Phaser.Canvas.setSmoothingEnabled(pixel.context, false)
+    Phaser.Canvas.setSmoothingEnabled(TRCGame.pixel.context, false)
 
-    pixel.width = pixel.canvas.width
-    pixel.height = pixel.canvas.height
+    TRCGame.pixel.width = TRCGame.pixel.canvas.width
+    TRCGame.pixel.height = TRCGame.pixel.canvas.height
   },
 
   create: function () {
-    game.physics.startSystem(Phaser.Physics.ARCADE)
+    TRCGame.game.physics.startSystem(Phaser.Physics.ARCADE)
 
-    game.state.start('load')
+    TRCGame.game.state.start('load')
   },
 
-  render: mirrorCanvases
-}
-
-function mirrorCanvases () {
-  pixel.context.drawImage(game.canvas, 0, 0, game.width, game.height, 0, 0, pixel.width, pixel.height)
+  render: TRCGame.mirrorCanvases
 }

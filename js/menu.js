@@ -1,7 +1,8 @@
-/*global game, Phaser*/
+/*global TRCGame, Phaser*/
 
-var menuState = {
+TRCGame.menuState = {
   create: function () {
+    var game = TRCGame.game
     this.nameLabel = game.add.text(20, 20, 'TRC Hackathon\nGame',
             {font: '30px League Spartan', fill: '#ffffff'})
     this.startLabel = game.add.text(20, 200, 'Press Z to start',
@@ -13,8 +14,8 @@ var menuState = {
   },
 
   start: function () {
-    game.state.start('play')
+    TRCGame.game.state.start('play')
   },
 
-  render: mirrorCanvases
+  render: TRCGame.mirrorCanvases
 }

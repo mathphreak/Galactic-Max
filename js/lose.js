@@ -1,7 +1,8 @@
-/*global game, Phaser*/
+/*global TRCGame, Phaser*/
 
-var loseState = {
+TRCGame.loseState = {
   create: function () {
+    var game = TRCGame.game
     var abusiveMessages = [
       'Get good',
       'Just uninstall'
@@ -21,8 +22,8 @@ var loseState = {
   },
 
   restart: function () {
-    game.state.start('play')
+    TRCGame.game.state.start('play')
   },
 
-  render: mirrorCanvases
+  render: TRCGame.mirrorCanvases
 }

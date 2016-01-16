@@ -1,7 +1,8 @@
-/*global game, Phaser*/
+/*global TRCGame, Phaser*/
 
-var winState = {
+TRCGame.winState = {
   create: function () {
+    var game = TRCGame.game
     this.nameLabel = game.add.text(20, 20, 'You win!',
             {font: '30px League Spartan', fill: '#ffffff'})
     this.winLabel = game.add.text(20, 200, 'Press Z to restart',
@@ -13,8 +14,8 @@ var winState = {
   },
 
   restart: function () {
-    game.state.start('play')
+    TRCGame.game.state.start('play')
   },
 
-  render: mirrorCanvases
+  render: TRCGame.mirrorCanvases
 }

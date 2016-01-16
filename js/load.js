@@ -1,7 +1,8 @@
-/*global  game*/
+/*global TRCGame*/
 
-var loadState = {
+TRCGame.loadState = {
   preload: function () {
+    var game = TRCGame.game
     this.loadingLabel = game.add.text(20, 20, 'loading...',
           {font: '20px League Spartan', fill: '#ffffff'})
 
@@ -13,8 +14,8 @@ var loadState = {
   },
 
   create: function () {
-    game.state.start('menu')
+    TRCGame.game.state.start('menu')
   },
 
-  render: mirrorCanvases
+  render: TRCGame.mirrorCanvases
 }
