@@ -15,9 +15,11 @@ var playState = {
     this.platforms = platforms
 
     platforms.enableBody = true
-
-    var ground = platforms.create(0, game.world.height - 32, 'ground')
-    ground.body.immovable = true
+    for (var i = 0; i < game.width; i += 48) {
+      var ground = platforms.create(i, game.world.height - 32, 'platform')
+      ground.scale.setTo(2, 2)
+      ground.body.immovable = true
+    }
 
     /*
     var ledge = platforms.create(400, 400, 'ground')

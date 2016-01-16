@@ -9,6 +9,7 @@ var loadState = {
     game.load.image('ground', 'assets/tutorial_platform.png')
     game.load.image('star', 'assets/tutorial_star.png')
     game.load.image('bullet', 'assets/Projectile.png')
+    game.load.image('platform', 'assets/Sat_Platform.png')
     game.load.spritesheet('dude', 'assets/tutorial_dude.png', 32, 48)
   },
 
